@@ -25,7 +25,7 @@ function BottomTabNavigator (){
             },
           })}>
             
-            <Bottom_Tab.Screen name='Расписание'component={TimeTable}   />
+            <Bottom_Tab.Screen name='Расписание'  component={TimeTable}   />
             <Bottom_Tab.Screen name='Профиль' options={{headerShown: false}} component={Profile}  />
         </Bottom_Tab.Navigator>
     )

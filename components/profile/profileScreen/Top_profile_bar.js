@@ -11,9 +11,9 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 export default function Top_profile_bar(props){
     const {login} = props
     return(
-        <SafeAreaView style={{borderColor:theme.bgWhite(0.3),backgroundColor:theme.bgWhite(0.3)}} className="border-2 w-full rounded-b-2xl justify-center"  >
+        <SafeAreaView style={{borderColor:theme.bgWhite(0.4),height:wp(23),backgroundColor:theme.bgWhite(0.3)}} className="border-2 w-full rounded-b-2xl justify-center "  >
             <TouchableOpacity className="flex flex-row" >
-            <View className="h-full w-full flex-row " style={{marginHorizontal:wp(4),gap:wp(21)}} >
+            <View className="h-full w-full flex-row " style={{marginHorizontal:wp(4),gap:wp(17)}} >
             <UserCircleIcon size={wp(15)} color={'gray'}/>
                         <Text className="text-white  font-bold align-middle" style={{fontSize:wp(5)}}> 
                         {login}

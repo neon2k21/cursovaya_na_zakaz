@@ -1,4 +1,4 @@
-import { FlatList, View, useWindowDimensions,Text, ScrollView, SafeAreaView,Image, useState  } from "react-native";
+import { View, useWindowDimensions,Text, ScrollView, SafeAreaView,Image, useState  } from "react-native";
 import {useNavigation} from '@react-navigation/native';
 import TopInfoBar from "../components/timetbale/top_bar";
 import { TabView, SceneMap ,TabBar} from 'react-native-tab-view';

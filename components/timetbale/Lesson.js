@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity,Alert, Modal, StyleSheet,Pressable,Image  } from "react-native";
+import { View, Text, TouchableOpacity, Modal, StyleSheet,Pressable,Image  } from "react-native";
 import {theme} from "../../Theme/index"
 import React, {useState} from 'react';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -22,10 +22,6 @@ export default function Item_of_list(props){
         
         <View className="flex-1 justifyContent-center" >
           <View style={styles.modalView}>
-          <Image 
-        
-        source={require('../../assets/backgrounds/info_bg.jpg')} 
-        className="w-full h-3/6 rounded-2xl" />
            
             <Text className="text-2xl font-bold" style={{color:'black', marginVertical:wp(0)}} >{name}</Text>
             <Text className="text-2xl font-bold" style={{color:'black', marginVertical:wp(1)}}>Контакты:</Text>

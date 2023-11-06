@@ -15,7 +15,7 @@ export default function Profile(){
     
     
     return(
-        <View className="w-full h-full ">
+        <View className="w-full h-full">
              <Image 
         blurRadius={70} 
         source={require('../assets/backgrounds/bg.jpg')} 
