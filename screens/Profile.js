@@ -15,7 +15,7 @@ export default function Profile(){
     
     
     return(
-        <View className="w-full h-full">
+        <View className="w-full h-full ">
              <Image 
         blurRadius={70} 
         source={require('../assets/backgrounds/bg.jpg')} 
@@ -33,7 +33,7 @@ export default function Profile(){
                            
                   
             </ScrollView>
-            <View style={{backgroundColor:theme.bgWhite(0.3)}} className=" w-full h-3/6 border-2 rounded-t-2xl w-full  justify-center" >
+            <View style={{backgroundColor:theme.bgWhite(0.3)}} className=" w-full h-3/6 border-2 rounded-t-2xl justify-center" >
                 <View className="h-full w-full" style={{padding:wp(6)}}>
                 <Text className="text-white text-2xl font-bold">
                     Дополнительные параметры:
