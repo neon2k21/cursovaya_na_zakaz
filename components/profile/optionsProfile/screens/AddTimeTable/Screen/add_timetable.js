@@ -6,7 +6,7 @@ import groupSearcher from "../DropDowns/groupSearch";
 
 
 export default function Add_timetable(){
-    const {navigation} = useNavigation()
+    const {navigate} = useNavigation()
     return(
         <View className="w-full h-full">
             <Image 
@@ -15,7 +15,7 @@ export default function Add_timetable(){
         className="absolute w-full h-full" />
                 <View className=" w-full h-2/4" >
                        <TouchableOpacity className="flex-row w-full bg-red rounded-2xl" style={{height:wp(15),borderWidth:2, gap: wp(68), marginVertical:wp(3)}} 
-                       onPress={()=>navigation('group', groupSearcher)}>
+                       onPress={()=>navigate('Выбор группы', groupSearcher)}>
                             <Text style={{padding:wp(3), color:'white'}}>
                                 Группа
                             </Text>

@@ -10,20 +10,33 @@ import RingTImeTable from '../components/profile/optionsProfile/screens/RingTIme
 
 import Auth from '../components/profile/optionsProfile/screens/Auth';
 import Add_timetable from '../components/profile/optionsProfile/screens/AddTimeTable/Screen/add_timetable';
+import groupSearcher from '../components/profile/optionsProfile/screens/AddTimeTable/DropDowns/groupSearch';
+import teacherSearcher from '../components/profile/optionsProfile/screens/AddTimeTable/DropDowns/teacherSearch';
 
 const Bottom_Tab = createBottomTabNavigator()
 const Profile_Stack = createNativeStackNavigator()
+const Dropdowns_Stack = createNativeStackNavigator()
+
+function DropDownsNavigator(){
+  return(
+    <Dropdowns_Stack.Navigator>
+      <Dropdowns_Stack.Screen name = "Добавить расписание" component={Add_timetable}/>
+      <Dropdowns_Stack.Screen name = "Выбор группы" component={groupSearcher}/>
+      <Dropdowns_Stack.Screen name ="Выбор преподавателя" component={teacherSearcher}/>
+    </Dropdowns_Stack.Navigator>
+  )
+}
 
 
 function ProfileStackNavigator (){
 
   return(
     <Profile_Stack.Navigator>
-      <Profile_Stack.Screen name = "Профиль" options={{headerShown: false}} component={Profile}/>
-      <Profile_Stack.Screen name = "Авторизация" component={Auth}/>
+      <Profile_Stack.Screen name = "Профиль"  options={{headerShown: false}}component={Profile}/>
+      <Profile_Stack.Screen name = "Авторизация"  component={Auth}/>
       <Profile_Stack.Screen name = "Настройки" component={SettingsScreen}/>
       <Profile_Stack.Screen name = "Расписание звонков" component={RingTImeTable}/>
-      <Profile_Stack.Screen name = "Добавить расписание" component={Add_timetable}/>
+      <Profile_Stack.Screen name = "Добавить расписание"  options={{headerShown: false}} component={DropDownsNavigator}/>
     </Profile_Stack.Navigator>
   )
 
@@ -47,7 +60,7 @@ function BottomTabNavigator (){
           })}>
             
             <Bottom_Tab.Screen name='Расписание'  component={TimeTable}   />
-            <Bottom_Tab.Screen name='Профиль'  component={ProfileStackNavigator}  />
+            <Bottom_Tab.Screen name='Профиль'  options={{headerShown: false}}component={ProfileStackNavigator}  />
         </Bottom_Tab.Navigator>
     )
 }
