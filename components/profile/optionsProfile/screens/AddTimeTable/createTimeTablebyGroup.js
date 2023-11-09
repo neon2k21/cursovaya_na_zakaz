@@ -1,12 +1,14 @@
 import {db} from '../../../../../utlls/firebase/index'
 import {ref, onValue} from 'firebase/database'
-import { createTable,getAllTablesFromDB,insertDataInTable, getTimeTableFromDB } from '../../../../../utlls/localDB'
+import { createDatabase,getAllTablesFromDB,insertDataInTable, getTimeTableFromDB } from '../../../../../utlls/localDB'
+import { useEffect } from 'react'
+import { Configuration } from '../../../../../utlls/localDB/configuration'
 
-export function createTimeTable(props){
-
-    const {parameterName} = props
+export function createTimeTable(parameterName){
     
-    createTable(parameterName);
+    //console.log('name in create', parameterName)
+    createDatabase(Configuration.dbName,parameterName);
+    
 
 
     let groupData = []
@@ -48,6 +50,8 @@ export function createTimeTable(props){
         }
        
     })
+    
+    
 
     let collectedData = []
 
@@ -75,8 +79,9 @@ export function createTimeTable(props){
         console.log('placeInday', getTimeTable[i].placeInday)
         */
     }
-        getAllTablesFromDB()
-        //insertDataInTable(...collectedData, parameterName)
-        getTimeTableFromDB(parameterName)
+        //getAllTablesFromDB(Configuration.dbName)
+        ///console.log(Configuration.dbName)
+        insertDataInTable(Configuration.dbName,collectedData, parameterName)
+        getTimeTableFromDB(Configuration.dbName,parameterName)
 
 }
