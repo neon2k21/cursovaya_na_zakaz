@@ -8,11 +8,12 @@ import CardTimeTable from "../components/profile/profileScreen/timetable_card";
 import { theme } from "../Theme";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import AddCardTimeTable from "../components/profile/profileScreen/timetable_add_card";
+import * as SQLite from "expo-sqlite"
+import { Platform } from 'react-native';
 
 
 export default function Profile(){
-
-    
+   
     
     return(
         <View className="w-full h-full ">

@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity, View, Text, Image } from "react-native";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {ChevronDownIcon} from 'react-native-heroicons/solid'
-import groupSearcher from "../DropDowns/groupSearch";
+import GroupSearcher from "../DropDowns/groupSearch";
 
 
 export default function Add_timetable(){
@@ -15,7 +15,7 @@ export default function Add_timetable(){
         className="absolute w-full h-full" />
                 <View className=" w-full h-2/4" >
                        <TouchableOpacity className="flex-row w-full bg-red rounded-2xl" style={{height:wp(15),borderWidth:2, gap: wp(68), marginVertical:wp(3)}} 
-                       onPress={()=>navigate('Выбор группы', groupSearcher)}>
+                       onPress={()=>navigate('Выбор группы', GroupSearcher)}>
                             <Text style={{padding:wp(3), color:'white'}}>
                                 Группа
                             </Text>

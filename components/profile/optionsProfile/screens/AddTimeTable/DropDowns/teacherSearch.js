@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 
 
 
-export default function teacherSearcher(){
+export default function TeacherSearcher(){
     var count = 0;
     
     

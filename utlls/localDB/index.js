@@ -1,28 +1,36 @@
-import * as SQLite from "expo-sqlite";
-import * as FileSystem from "expo-file-system"
-import { Configuration } from "./configuration";
+import * as SQLite from "expo-sqlite"
+import { Platform } from 'react-native';
 
-
-export const checkExistenceDB = async dbName =>{
-    const dbDir = FileSystem.documentDirectory + "SQLite/"
-    const dirInfo = await FileSystem.getInfoAsync(dbDir+dbName)
-    if(!dirInfo.exists) return false
-    else return true
-
+function openDatabase() {
+  if (Platform.OS === "web"){
+    return {
+      transaction: () =>{
+        return {
+          executeSql: () => {},
+        };
+      },
+    };
+  }
+  const db = SQLite.openDatabase("db.db")
+  return db
 }
 
+const db = openDatabase();
 
 
 
-export async function createDatabase(dbName,tableName){
-    const db = await SQLite.openDatabase(dbName)
+
+
+
+
+export function createTable(tableName){
+   
    // console.log('db:', db)
     
-        db.transaction(txn => {
-            txn.executeSql(
-                "CREATE TABLE IF NOT EXISTS "+tableName+" (subject TEXT, week INTEGER, day INTEGER, starttime TEXT, endtime TEXT, teacher TEXT, group TEXT, place INTEGER, placeInDay INTEGER)"
-            )
-    
+        db.transaction((tx) => {
+            tx.executeSql(
+               ` create table if not exists ${tableName} (subject TEXT, week INTEGER, day INTEGER, starttime TEXT, endtime TEXT, teacher TEXT, group TEXT, place INTEGER, placeInDay INTEGER);`
+            );
         }),error => console.log(`create error: ${error}`);
     
     
@@ -30,41 +38,29 @@ export async function createDatabase(dbName,tableName){
 
 }
 
-export async function insertDataInTable(dbName, arrayOfTimeTable, tableName){
-    const dirInfo = await checkExistenceDB(dbName)
-    if(!dirInfo) await createDatabase(dbName)
-    
-    const db = await SQLite.openDatabase(dbName)
-
+export function insertDataInTable(arrayOfTimeTable, tableName){
     
      db.transaction((txn) => {
         for(let i = 0; i < arrayOfTimeTable.length; i++ ){
         txn.executeSql(
-            "INSERT INTO "+tableName+" (subject, week, day, starttime, endtime, teacher, group, place, placeInDay) values ("+
-            arrayOfTimeTable[i].subject,
-            arrayOfTimeTable[i].week,
-            arrayOfTimeTable[i].day, 
-            arrayOfTimeTable[i].starttime,
-            arrayOfTimeTable[i].endtime,
-            arrayOfTimeTable[i].teacher,
-            arrayOfTimeTable[i].group,
-            arrayOfTimeTable[i].place,
-            arrayOfTimeTable[i].placeInday
-            
-            
-            +");",[arrayOfTimeTable], [], (_, { rows }) =>
-            console.log('dada',JSON.stringify(rows))
+            `insert into ${tableName} (subject, week, day, starttime, endtime, teacher, group, place, placeInDay) values (
+            ${arrayOfTimeTable[i].subject},
+            ${arrayOfTimeTable[i].week},
+            ${arrayOfTimeTable[i].day}, 
+            ${arrayOfTimeTable[i].starttime},
+            ${arrayOfTimeTable[i].endtime},
+            ${arrayOfTimeTable[i].teacher},
+            ${arrayOfTimeTable[i].group},
+            ${arrayOfTimeTable[i].place},
+            ${arrayOfTimeTable[i].placeInday});`
         );
-
-        txn.executeSql("select * from "+ tableName, [], (_, { rows }) =>
-          console.log('dada',JSON.stringify(rows))
+        txn.executeSql(`select * from ${tableName}`, [], (_, { rows }) =>
+          console.log(JSON.stringify(rows))
         );
       }
     }
-
 ),error => console.log(`insert error: ${error}`);
-    
-    }
+}
     
 
 
