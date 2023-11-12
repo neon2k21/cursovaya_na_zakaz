@@ -1,15 +1,15 @@
 import { View, useWindowDimensions,Text, ScrollView, SafeAreaView,Image, useState  } from "react-native";
 import {useNavigation} from '@react-navigation/native';
-import TopInfoBar from "../components/timetbale/top_bar";
 import { TabView, SceneMap ,TabBar} from 'react-native-tab-view';
 import * as React from 'react';
-import { useLayoutEffect } from "react";
+import { useLayoutEffect,useEffect } from "react";
 import Item_of_list from "../components/timetbale/Lesson";
-import { theme } from "../Theme";
+
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 import * as SQLite from "expo-sqlite"
 import { Platform } from 'react-native';
+import { useTheme } from "../Theme/themeProvider";
 
 function openDatabase() {
   if (Platform.OS === "web"){
@@ -95,28 +95,32 @@ const Monday = () => (
 
   
   const renderTabBar = props => (
+    colors = useTheme(),
     <TabBar
       {...props}
-      indicatorStyle={{ backgroundColor: theme.bgGreen(0.6)}}
-         style={{ backgroundColor: 'white',shadowColor:theme.bgWhite(0.8) }}
+      indicatorStyle={{ backgroundColor: 'green'}}
+         style={{ backgroundColor: colors.background}}
          
          
          renderLabel={({ route}) => (
-          <Text style={{ fontSize:wp(3.2), color: 'black', margin: 8, fontWeight: "bold" }}>
+          colors = useTheme(),
+          <Text style={{ fontSize:wp(3.2), margin: 8, fontWeight: "bold", color: 'green'}}>
             {route.title}
           </Text>
         )}
     />
   );
 
-export default function TimeTable(){
+const TimeTable = (groupName) => {
+  const {colors} = useTheme()
     const navigation = useNavigation()
-    useLayoutEffect(() =>{
-        navigation.setOptions({
-            headerLeft: () => (<TopInfoBar group="huhdh"/>),
-        });
-    }, []);
-
+    if(groupName.length === 0) groupName = 'Расписание'
+    useEffect(() => {
+      
+       navigation.setOptions({
+         headerTitle: groupName 
+       });
+     }, [navigation]);
     const layout = useWindowDimensions();
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
@@ -135,12 +139,14 @@ export default function TimeTable(){
         
       <TabView
       renderTabBar={renderTabBar}
-      style={{backgroundColor:'white'}}
+      style={{backgroundColor: colors.background}}
       navigationState={{ index, routes }}
       renderScene={renderScene}
       onIndexChange={setIndex}
       initialLayout={{ width: layout.width }}
+     
     />    
     
     )
 }
+export default TimeTable
