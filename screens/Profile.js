@@ -32,91 +32,65 @@ const db1 = openDatabase();
 
 
 export default function Profile(){
-state = {
-    uniqueValue: 1
-  }
   const {navigate} = useNavigation()
- const  forceRemount = () => {
-  console.log(uniqueValue)
-    this.setState(({ uniqueValue }) => ({
-      uniqueValue: uniqueValue + 1
-      
-    }));
-    
-  }
-
+  let names = []
   db1.transaction((tx) => {
     
     tx.executeSql(
-      `create table if not exists timetables (name text);`
+      `create table if not exists timetables (name text unique);`
    );
   });
    // console.log('2', names)
     
    const {dark, colors, setScheme} = useTheme()
    const [isEnabled, setIsEnabled] = useState(false);
-   const [data,setData] = useState([]);
-
+   const [data, setData] = useState();
    const ToggleTheme = ()=>{
     dark ? setScheme('light') : setScheme('dark')
     setIsEnabled(previousState => !previousState)
    }
-   async function fetchNames(){
-    try{
-      let names = []
-       await db1.transaction((tx) => {
-        tx.executeSql(
-         `select * from timetables;`,[],(sqlTxn,res)=>{
-         let len = res.rows.length
-                 if (len > 0){
-                    
-                     for(let i=0;i<len;i++){
-                      
-                         let item = res.rows.item(i);
-                         names.push(item.name)
-                       
-     
-                     }
-       
-                     console.log('3', names)
-                    
-                 }
-             });
-             
-     
-         });
-      
-    
-    
-    setData(names)
-        
-    } catch(error){
-      setError(error)
-     
-    }
-   
-  }
-   
-   
 
-   
+   const getTimes = () =>{
+    let names = []
+    db1.transaction((tx) => {
+     tx.executeSql(
+      `select * from timetables;`,[],(sqlTxn,res)=>{
+      let len = res.rows.length
+              if (len > 0){
+                 
+                  for(let i=0;i<len;i++){
+                   
+                      let item = res.rows.item(i);
+                      names.push(item.name)
+                    
+  
+                  }
+                  setData(names)
+                  console.log('3', names)
+                 
+              }
+          });
+          
+  
+      });
+   }
   
      useEffect( () => {
-      fetchNames()
+      getTimes()
     },[])
       
 
     return(
-        <View className="w-full h-full " key={this.state.uniqueValue}>
+        <View className="w-full h-full ">
              <Image 
         blurRadius={70} 
         source={require('../assets/backgrounds/bg.jpg')} 
         className="absolute w-full h-full" />
             
+           
             <FlatList
       horizontal={true}
       data={data}
-      extraData={data}
       renderItem={({item})=> (
         console.log('item',item),
         <CardTimeTable  text={item} />

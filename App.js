@@ -1,6 +1,6 @@
 import { ThemeProvider } from './Theme/themeProvider';
 import AppNavigation from './navigation/navigation';
-import { SafeAreaView,View } from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
@@ -8,7 +8,7 @@ import { SafeAreaView,View } from 'react-native-safe-area-context';
 export default function App() {
   return  ( 
     <ThemeProvider>
-      <SafeAreaView className="w-full h-full flex-1">
+      <SafeAreaView className="w-full h-full">
           <AppNavigation/>
       </SafeAreaView>
     </ThemeProvider>

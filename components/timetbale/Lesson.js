@@ -11,7 +11,7 @@ export default function Item_of_list(props){
 
    return(
  
-         <View className = " w-1full rounded-2xl my-2 bg-transparent border-2" style={{borderColor:colors.background, height: hp(12)}} >
+         <View className = " w-11/12 rounded-2xl my-2 bg-transparent border-2" style={{borderColor:colors.background, height: hp(12)}} >
              <Modal
         animationType="slide"
         transparent={true}
@@ -84,12 +84,12 @@ export default function Item_of_list(props){
          <Text style={{fontSize: wp(4),color: colors.text}} >
            {type}
          </Text>
-         <View className="flex-row" style={{gap: wp(27)}}>
+         <View className="flex-row" style={{gap: wp(45)}}>
          <Text style={{fontSize: wp(4),color: colors.text}}>
             {place}
          </Text>
          <TouchableOpacity className="flex-row">
-          <ArrowTopRightOnSquareIcon size={wp(4)} color={colors.background}/>
+          <ArrowTopRightOnSquareIcon size={wp(1)} color={colors.background}/>
          <Text onPress={()=> setModalVisible(true)} style={{fontSize: wp(4),color: colors.text}}>
             {name}
          </Text>

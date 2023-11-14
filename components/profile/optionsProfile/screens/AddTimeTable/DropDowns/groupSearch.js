@@ -14,7 +14,6 @@ import { useTheme } from "../../../../../../Theme/themeProvider";
 
 export default function GroupSearcher({ navigation }){
   const {colors} = useTheme()
-
   const {navigate} = useNavigation()
   const [isLoading, setIsLoading] = useState(false);
   const [data,setData] = useState([]);
@@ -42,6 +41,7 @@ export default function GroupSearcher({ navigation }){
     setData(groupData)
     setFullData(groupData)
     setIsLoading(false);
+    console.log(groupData)
     } catch(error){
       setError(error)
       setIsLoading(false);
@@ -59,6 +59,8 @@ export default function GroupSearcher({ navigation }){
   }
 
   const contains = (name, query) =>{
+    console.log('name', name)
+    console.log('query', query)
       if (name.includes(query)){
          return true;
       }

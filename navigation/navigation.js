@@ -1,12 +1,13 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {ClockIcon} from 'react-native-heroicons/solid'
 import {UserIcon} from 'react-native-heroicons/solid'
 import {ChevronRightIcon} from 'react-native-heroicons/solid'
 import TimeTable from '../screens/TimeTable';
 import Profile from '../screens/Profile';
+import {ArrowPathIcon} from 'react-native-heroicons/solid'
+import {Bars4Icon} from 'react-native-heroicons/solid'
 import {ArrowsRightLeftIcon} from 'react-native-heroicons/solid'
 import { TouchableOpacity,View } from 'react-native';
 import Auth from '../components/profile/optionsProfile/screens/Auth';
@@ -15,19 +16,10 @@ import GroupSearcher from '../components/profile/optionsProfile/screens/AddTimeT
 import TeacherSearcher from '../components/profile/optionsProfile/screens/AddTimeTable/DropDowns/teacherSearch';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { useTheme } from '../Theme/themeProvider';
-// import Monday from '../components/timetbale/screens/Monday'
-// import Tuesday from '../components/timetbale/screens/Tuesday'
-// import Wednesday from '../components/timetbale/screens/Wednesday'
-// import Thursday from '../components/timetbale/screens/Thursday'
-// import Friday from '../components/timetbale/screens/Friday'
-// import Saturday from '../components/timetbale/screens/Saturday'
-// import Sunday from '../components/timetbale/screens/Sunday'
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Bottom_Tab = createBottomTabNavigator()
 const Profile_Stack = createNativeStackNavigator()
 const Dropdowns_Stack = createNativeStackNavigator()
-const Top_Tab = createMaterialTopTabNavigator()
 
 function DropDownsNavigator(){
   const {colors} = useTheme()
@@ -77,24 +69,6 @@ function ProfileStackNavigator (){
 
 }
 
-// function TopTabNavigator(){
-//   const insets = useSafeAreaInsets();
-//     <Top_Tab.Navigator
-//     screenOptions={{
-//       tabBarLabelStyle: { fontSize: 12 },
-//       tabBarItemStyle: { width: 100 },
-//       tabBarStyle: { backgroundColor: 'powderblue', marginTop: insets  },
-//     }}>
-//       <Top_Tab.Screen name="Понедельник" component={Monday}/>
-//       <Top_Tab.Screen name="Вторник" component={Tuesday}/>
-//       <Top_Tab.Screen name="Среда" component={Wednesday}/>
-//       <Top_Tab.Screen name="Четверг" component={Thursday}/>
-//       <Top_Tab.Screen name="Пятница" component={Friday}/>
-//       <Top_Tab.Screen name="Суббота" component={Saturday}/>
-//       <Top_Tab.Screen name="Воскресенье" component={Sunday}/>
-//     </Top_Tab.Navigator>
-// }
-
 function BottomTabNavigator (){
   const {colors} = useTheme()
     return(
@@ -142,7 +116,6 @@ function BottomTabNavigator (){
         })} component={TimeTable}   />
             <Bottom_Tab.Screen name='Профиль'  options={({ route })=>({
                     title: "Войти",
-                    
                     headerStyle:{
                       backgroundColor: colors.background,
                     },

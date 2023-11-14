@@ -3,7 +3,8 @@ import {ref, onValue} from 'firebase/database'
 import { createTable,getAllTablesFromDB,insertDataInTable, getTimeTableFromDB } from '../../../../../utlls/localDB'
 import * as SQLite from "expo-sqlite"
 import { Platform } from 'react-native';
-import customUseState from '../../../profileScreen/timetable_customhook';
+
+
 
 function openDatabase() {
   if (Platform.OS === "web"){
@@ -24,7 +25,7 @@ const db1 = openDatabase();
 
 
 
-export async function createTimeTable(parameterName){
+export  function createTimeTable(parameterName){
  
     var editedString = parameterName.replaceAll(' ','')
     .replaceAll('.','')
@@ -37,14 +38,14 @@ export async function createTimeTable(parameterName){
     let getTimeTable = []
     let subjectsData = []
     const startGroupCountRef = ref (db, 'Groups/')
-    await onValue(startGroupCountRef , (snapshot) => {
+     onValue(startGroupCountRef , (snapshot) => {
          for(let i=0;i<snapshot.val().length;i++) {
            groupData.push( snapshot.val()[i].group)
            
         }
     })
     const startTeacherCountRef = ref (db, 'Teachers/')
-    await onValue(startTeacherCountRef , (snapshot) => {
+     onValue(startTeacherCountRef , (snapshot) => {
          for(let i=0;i<snapshot.val().length;i++) {
             teacherData.push(snapshot.val()[i])
            
@@ -52,7 +53,7 @@ export async function createTimeTable(parameterName){
        
     })
     const startTimeTableCountRef = ref (db, 'TimeTable/')
-    await onValue(startTimeTableCountRef , (snapshot) => {
+     onValue(startTimeTableCountRef , (snapshot) => {
         
          for(let i=0;i<snapshot.val().length;i++) {
             
@@ -64,7 +65,7 @@ export async function createTimeTable(parameterName){
        
     })
     const startubjectCountRef = ref (db, 'Subjects/')
-    await onValue(startubjectCountRef , (snapshot) => {
+     onValue(startubjectCountRef , (snapshot) => {
          for(let i=0;i<snapshot.val().length;i++) {
             subjectsData.push( snapshot.val()[i].name)
            
@@ -91,11 +92,15 @@ export async function createTimeTable(parameterName){
         })
         
     }
+    //storage.set(parameterName,collectedData)
+    //console.log(storage.getAllKeys())
+
     let names =[]
     db1.transaction((tx) => {
-     
       tx.executeSql(
-        `create table if not exists ${editedString} (subject text, week integer, day integer, starttime text, endtime text, teacher text, teachercontact text, grp text, place text, placeInDay integer);`
+        `create table ${editedString} (subject text, week integer, day integer, starttime text, endtime text, teacher text, contact text, grp text, place text, placeInDay integer);`
+        , [], (_, { rows }) =>
+      console.log('created',JSON.stringify(rows))
         );
         tx.executeSql(
           `drop table timetables;`
@@ -141,8 +146,6 @@ export async function createTimeTable(parameterName){
               getTimeTable[i].place,
               Number(getTimeTable[i].placeInday)
           ]);
-          
-     
     }
    
     tx.executeSql(`select * from ${editedString};`, [], (_, { rows }) =>
