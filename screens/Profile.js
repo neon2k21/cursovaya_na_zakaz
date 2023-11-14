@@ -9,6 +9,7 @@ import AddCardTimeTable from "../components/profile/profileScreen/timetable_add_
 import * as SQLite from "expo-sqlite"
 import { Platform } from 'react-native';
 import { useTheme } from "../Theme/themeProvider";
+import Add_timetable from "../components/profile/optionsProfile/screens/AddTimeTable/Screen/add_timetable";
 
 function openDatabase() {
   if (Platform.OS === "web"){
@@ -31,75 +32,98 @@ const db1 = openDatabase();
 
 
 export default function Profile(){
-  let names = []
+state = {
+    uniqueValue: 1
+  }
+  const {navigate} = useNavigation()
+ const  forceRemount = () => {
+  console.log(uniqueValue)
+    this.setState(({ uniqueValue }) => ({
+      uniqueValue: uniqueValue + 1
+      
+    }));
+    
+  }
+
   db1.transaction((tx) => {
     
     tx.executeSql(
-      `create table if not exists timetables (name text unique);`
+      `create table if not exists timetables (name text);`
    );
   });
    // console.log('2', names)
     
    const {dark, colors, setScheme} = useTheme()
    const [isEnabled, setIsEnabled] = useState(false);
-   const [data] = useState();
+   const [data,setData] = useState([]);
+
    const ToggleTheme = ()=>{
     dark ? setScheme('light') : setScheme('dark')
     setIsEnabled(previousState => !previousState)
    }
-
-   const getTimes = () =>{
-    let names = []
-    db1.transaction((tx) => {
-     tx.executeSql(
-      `select * from timetables;`,[],(sqlTxn,res)=>{
-      let len = res.rows.length
-              if (len > 0){
-                 
-                  for(let i=0;i<len;i++){
-                   
-                      let item = res.rows.item(i);
-                      names.push(item.name)
+   async function fetchNames(){
+    try{
+      let names = []
+       await db1.transaction((tx) => {
+        tx.executeSql(
+         `select * from timetables;`,[],(sqlTxn,res)=>{
+         let len = res.rows.length
+                 if (len > 0){
                     
-  
-                  }
-                  data(names)
-                  console.log('3', names)
-                 
-              }
-          });
-          
-  
-      });
-   }
+                     for(let i=0;i<len;i++){
+                      
+                         let item = res.rows.item(i);
+                         names.push(item.name)
+                       
+     
+                     }
+       
+                     console.log('3', names)
+                    
+                 }
+             });
+             
+     
+         });
+      
+    
+    
+    setData(names)
+        
+    } catch(error){
+      setError(error)
+     
+    }
+   
+  }
+   
+   
+
+   
   
      useEffect( () => {
-      getTimes()
+      fetchNames()
     },[])
       
 
     return(
-        <View className="w-full h-full ">
+        <View className="w-full h-full " key={this.state.uniqueValue}>
              <Image 
         blurRadius={70} 
         source={require('../assets/backgrounds/bg.jpg')} 
         className="absolute w-full h-full" />
             
-           
-            <ScrollView horizontal
-                 
-                  showsHorizontalScrollIndicator={false}
-                  className="h-3/6 w-full"
-                  >{
-                names.map((item, index) => {
-                 
-                  return(
-                  <CardTimeTable key={index} text={item} />
-                  )
-                })
-              }
-              <AddCardTimeTable/>
-            </ScrollView>
+            <FlatList
+      horizontal={true}
+      data={data}
+      extraData={data}
+      renderItem={({item})=> (
+        console.log('item',item),
+        <CardTimeTable  text={item} />
+      )
+      
+    }
+      />
             <View style={{borderColor:colors.background}} className=" w-full h-3/6 border-2 rounded-t-2xl justify-center" >
                 <View className="h-full w-full" style={{padding:wp(6)}}>
                 <Text className="font-bold" style={{fontSize:wp(5),justifyContent:'center',padding:wp(2), color: colors.text}}>
@@ -125,11 +149,13 @@ export default function Profile(){
                     />
                 </View>
                 
-                <View className="flex-row w-full border-2 rounded-3xl justify-center" style={{borderColor:colors.background,marginBottom:wp(2),height:wp(15)}}>
+                <TouchableOpacity className="flex-row w-full border-2 rounded-3xl justify-center" 
+                style={{borderColor:colors.background,marginBottom:wp(2),height:wp(15)}}
+                onPress={()=>navigate('Добавить расписание', Add_timetable)}>
                   <Text className=" text-2xl font-bold" style={{justifyContent:'center',textAlignVertical:'center',color: colors.text}}>
-                       Автор: кто-то
+                      Добавить расписание
                     </Text>
-                </View>
+                </TouchableOpacity>
                 </View>
                
             </View>

@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import * as SQLite from "expo-sqlite"
 import { Platform } from 'react-native';
 
@@ -20,19 +21,19 @@ const db1 = openDatabase();
 
 
 export function deleteTimeTable(groupname) {
-
+  console.log('clicked',groupname.replaceAll(/[-, ./]/g,''))
   db1.transaction((tx) => {
     tx.executeSql(
-      `delete from timetables where name= (?);`,[groupname]
-    );
-    tx.executeSql(
-      `drop table if exists ${groupname.replaceAll(/[-,./]/g,'')};`
-    );
+      `delete from timetables where name=(?);`,[groupname]);
     tx.executeSql(`select * from timetables`, [], (_, { rows }) =>
-        console.log(JSON.stringify(rows))
-    );
+    console.log(JSON.stringify(rows))
+);
+    // tx.executeSql(
+    //   `drop table if exists ${groupname.replaceAll(/[-, ./]/g,'')};`
+    // );
+   
 }),error => console.log(`create error: ${error}`);
-
+  
 }
     
 export function getTimeTableFromLocal(groupname){
