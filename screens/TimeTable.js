@@ -2,14 +2,14 @@ import { View, useWindowDimensions,Text, ScrollView, SafeAreaView,Image, FlatLis
 import {useNavigation} from '@react-navigation/native';
 import { TabView, SceneMap ,TabBar} from 'react-native-tab-view';
 import * as React from 'react';
-import { useLayoutEffect,useEffect } from "react";
-import Item_of_list from "../components/timetbale/Lesson";
-
+import { useEffect } from "react";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {tablename} from '../components/profile/profileScreen/timetable_card'
 import * as SQLite from "expo-sqlite"
 import { Platform } from 'react-native';
 import { useTheme } from "../Theme/themeProvider";
+import Item_of_list from "../components/timetbale/Lesson";
+import { shedules } from "../components/profile/optionsProfile/screens/AddTimeTable/createTimeTable";
 
 function openDatabase() {
   if (Platform.OS === "web"){
@@ -28,152 +28,63 @@ function openDatabase() {
 const db1 = openDatabase();
 
 
-function getTimeTable(numOfDay,group){
-  
-}
-
-
-function refresh(){}
-
-function changeweek(){}
-
-function openfilter(){}
-
-// const Monday = () => (
-//     <SafeAreaView className="h-fit w-full items-center relative">
-//         <Image 
-//         blurRadius={70} 
-//         source={require('../assets/backgrounds/bg.jpg')} 
-//         className="absolute w-full h-full" />
-//         <ScrollView vertical
-//                   contentContainerStyle={{paddingVertical: 15, alignItems: "center"}}
-//                   showsVerticalScrollIndicator={false}
-//                   className="h-full w-full">
-//                     <Item_of_list name = "igor" contacts="value" type="Теория для дИмы" place="212" startTime="18:30" endTime="20:00" nameOfSubject ="Орг.расчет с бюдж.в  бюд. сист."/>
-//                     <Item_of_list name = "Олег" contacts="value" type="нет" place="212" startTime="18:30" endTime="20:00" nameOfSubject ="Плавание"/>
-//                     <Item_of_list name = "Олег" contacts="value" type="Практическая" place="212" startTime="18:30" endTime="20:00" nameOfSubject ="Плавание"/>
-//                     <Item_of_list name = "Олег" contacts="value" type="Практическая" place="212" startTime="18:30" endTime="20:00" nameOfSubject ="Плавание"/>
-//                     <Item_of_list name = "Олег" contacts="value" type="Практическая" place="212" startTime="18:30" endTime="20:00" nameOfSubject ="Плавание"/>
-//                     <Item_of_list name = "Олег" contacts="value" type="Практическая" place="212" startTime="18:30" endTime="20:00" nameOfSubject ="Плавание"/>
-//                     <Item_of_list name = "Олег" contacts="value" type="Практическая" place="212" startTime="18:30" endTime="20:00" nameOfSubject ="Плавание"/>
-
-//         </ScrollView>    
-//     </SafeAreaView>
-//   );
-  
-//   const Tuesday = () => (
-//     <View className="h-full w-full" style={{ flex: 1, backgroundColor: '#673ab7' }} />
-//   );
-//   const Wednsday = () => (
-//     <View className="h-full w-full" style={{ flex: 1, backgroundColor: '#673ab7' }} />
-//   );
-//   const Thursday = () => (
-//     <View className="h-full w-full" style={{ flex: 1, backgroundColor: '#673ab7' }} />
-//   );
-//   const Friday = () => (
-//     <View className="h-full w-full" style={{ flex: 1, backgroundColor: '#673ab7' }} />
-//   );
-//   const Saturday = () => (
-//     <View className="h-full w-full" style={{ flex: 1, backgroundColor: '#673ab7' }} />
-//   );
-//   const Sunday = () => (
-//     <View className="h-full w-full" style={{ flex: 1, backgroundColor: '#673ab7' }} />
-//   );
-  
-//   const renderScene = SceneMap({
-//     mon: Monday,
-//     tue: Tuesday,
-//     wed: Wednsday,
-//     thu: Thursday,
-//     fri: Friday,
-//     sat: Saturday,
-//     sun: Sunday
-   
-//   });
-
-
-
-  
-//   const renderTabBar = props => (
-//     colors = useTheme(),
-//     <TabBar
-//       {...props}
-//       indicatorStyle={{ backgroundColor: 'green'}}
-//          style={{ backgroundColor: colors.background}}
-         
-         
-//          renderLabel={({ route}) => (
-//           colors = useTheme(),
-//           <Text style={{ fontSize:wp(3.2), margin: 8, fontWeight: "bold", color: 'green'}}>
-//             {route.title}
-//           </Text>
-//         )}
-//     />
-//   );
 
 const TimeTable = () => {
-  var editedString = tablename.replaceAll(/[.,-/ ]/g,'')
-  console.log('table',editedString)
+  const navigation = useNavigation()
+  const {data1,setData1} = shedules()
+  console.log(data1)
+  React.useLayoutEffect(() =>{
+    navigation.setOptions({
+        headerTitle: tablename,
+    });
+}, []);
+
+  console.log('tableds',tablename)
   const {colors} = useTheme()
   const [data, setData] = React.useState([])
   const fetchdata = ()=>{
-    let names =[]
-    db1.transaction((tx) => {
-     tx.executeSql(
-      `select * from ${editedString};`,[],(sqlTxn,res)=>{
-      let len = res.rows.length
-     
-              if (len > 0){
-                 
-                  for(let i=0;i<len;i++){
+    if(setData.length!=0){
+      let names =[]
+      db1.transaction((tx) => {
+       tx.executeSql(
+        `select * from shedule;`,[],(sqlTxn,res)=>{
+        let len = res.rows.length
+       
+                if (len > 0){
                    
-                      let item = res.rows.item(i);
-                      
-                       names.push({
-                         subject: item.subject,
-                         week: item.week,
-                         day: item.day,
-                         starttime: item.starttime,
-                         endtime: item.endtime,
-                         teacher: item.teacher,
-                         teachercontact: item.teachercontact,
-                         grp: item.grp,
-                         place: item.place,
-                         placeInDay: item.placeInDay
-                       })
-                      
-                  }
-                 
-                 
-   
-              }
-          });
-          console.log('timeMon',names)
-        setData(names)
-      });
+                    for(let i=0;i<len;i++){
+  
+                        let item = res.rows.item(i);
+                        if(item.grp == tablename){}
+                         names.push({
+                           subject: item.subject,
+                           week: item.week,
+                           day: item.day,
+                           starttime: item.starttime,
+                           endtime: item.endtime,
+                           teacher: item.teacher,
+                           teachercontact: item.teachercontact,
+                           grp: item.grp,
+                           place: item.place,
+                           placeInDay: item.placeInDay
+                         })
+                    }
+                    }
+                   
+                   
+     
+                })
+                console.log('timeMon',names)
+                setData(names)
+            });
+    }
+    
   }
   
 
     useEffect(()=>{
       fetchdata()
     },[])
-
-
-    // const layout = useWindowDimensions();
-    // const [index, setIndex] = React.useState(0);
-    // const [routes] = React.useState([
-    //   { key: 'mon', title: 'Пн' },
-    //   { key: 'tue', title: 'Вт' },
-    //   { key: 'wed', title: 'Ср' },
-    //   { key: 'thu', title: 'Чт' },
-    //   { key: 'fri', title: 'Пт' },
-    //   { key: 'sat', title: 'Сб' },
-    //   { key: 'sun', title: 'Вс' }
-      
-    // ]);
-
-
-
 
     return(
 
@@ -188,7 +99,8 @@ const TimeTable = () => {
     className="w-full h-full"
     contentContainerStyle={{alignContent:'center'}}
     renderItem={({item})=> (
-      console.log('item',item),
+      //console.log('item',item),
+      
       <Item_of_list name = {item.teacher} contacts="value" type="Теория" place={item.place} startTime={item.starttime} endTime={item.endtime} nameOfSubject ={item.subject}/>
 
     )
@@ -197,14 +109,6 @@ const TimeTable = () => {
     /> 
     </SafeAreaView>
         
-    //   <TabView
-    //   renderTabBar={renderTabBar}
-    //   style={{backgroundColor: colors.background}}
-    //   navigationState={{ index, routes }}
-    //   renderScene={renderScene}
-    //   onIndexChange={setIndex}
-    //   initialLayout={{ width: layout.width }}
-    // />    
     
     )
 }

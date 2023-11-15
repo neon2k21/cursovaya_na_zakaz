@@ -5,7 +5,6 @@ import { useEffect, useLayoutEffect, useState } from "react";
 
 import CardTimeTable from "../components/profile/profileScreen/timetable_card";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import AddCardTimeTable from "../components/profile/profileScreen/timetable_add_card";
 import * as SQLite from "expo-sqlite"
 import { Platform } from 'react-native';
 import { useTheme } from "../Theme/themeProvider";
@@ -33,15 +32,7 @@ const db1 = openDatabase();
 
 export default function Profile(){
   const {navigate} = useNavigation()
-  let names = []
-  db1.transaction((tx) => {
-    
-    tx.executeSql(
-      `create table if not exists timetables (name text unique);`
-   );
-  });
-   // console.log('2', names)
-    
+  let names = []   
    const {dark, colors, setScheme} = useTheme()
    const [isEnabled, setIsEnabled] = useState(false);
    const [data, setData] = useState();
@@ -54,14 +45,14 @@ export default function Profile(){
     let names = []
     db1.transaction((tx) => {
      tx.executeSql(
-      `select * from timetables;`,[],(sqlTxn,res)=>{
+      `select distinct grp from shedule;`,[],(sqlTxn,res)=>{
       let len = res.rows.length
               if (len > 0){
                  
                   for(let i=0;i<len;i++){
                    
                       let item = res.rows.item(i);
-                      names.push(item.name)
+                      names.push(item.grp)
                     
   
                   }

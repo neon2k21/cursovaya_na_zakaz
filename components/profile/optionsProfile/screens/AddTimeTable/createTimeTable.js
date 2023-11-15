@@ -3,6 +3,7 @@ import {ref, onValue} from 'firebase/database'
 import { createTable,getAllTablesFromDB,insertDataInTable, getTimeTableFromDB } from '../../../../../utlls/localDB'
 import * as SQLite from "expo-sqlite"
 import { Platform } from 'react-native';
+import { useState } from 'react';
 
 
 
@@ -97,44 +98,10 @@ export  function createTimeTable(parameterName){
 
     let names =[]
     db1.transaction((tx) => {
-      tx.executeSql(
-        `create table ${editedString} (subject text, week integer, day integer, starttime text, endtime text, teacher text, contact text, grp text, place text, placeInDay integer);`
-        , [], (_, { rows }) =>
-      console.log('created',JSON.stringify(rows))
-        );
-        tx.executeSql(
-          `drop table timetables;`
-       );
-      tx.executeSql(
-        `drop table ${editedString};`
-     );
-      tx.executeSql(
-        `create table if not exists ${editedString} (subject text, week integer, day integer, starttime text, endtime text, teacher text, teachercontact text, grp text, place text, placeInDay integer);`
-        );
-      tx.executeSql(`select * from ${editedString};`, [], (_, { rows }) =>
-      console.log('created',JSON.stringify(rows))
-  );
-
-      tx.executeSql(
-        `create table if not exists timetables (name text);`
-     );
-    
-     tx.executeSql(`select * from timetables;`, [], (_, { rows }) =>
-        console.log('timetables: ',JSON.stringify(rows))
-    );
-    
-
-      tx.executeSql(`select * from ${editedString};`, [], (_, { rows }) =>
-        console.log('select from edit',JSON.stringify(rows))
-    );
-    
-        
-    
-     
-    for(let i = 0;i< getTimeTable.length;i++){
+     for(let i = 0;i< getTimeTable.length;i++){
        
       tx.executeSql(
-          `insert into ${editedString} (subject, week, day, starttime, endtime, teacher, teachercontact, grp, place, placeInDay) values (?,?,?,?,?,?,?,?,?,?)`,[
+          `insert into shedule (subject, week, day, starttime, endtime, teacher, contact, grp, place, placeInDay) values (?,?,?,?,?,?,?,?,?,?)`,[
               subjectsData[getTimeTable[i].subject],
               Number(getTimeTable[i].week),
               Number(getTimeTable[i].day),
@@ -148,24 +115,52 @@ export  function createTimeTable(parameterName){
           ]);
     }
    
-    tx.executeSql(`select * from ${editedString};`, [], (_, { rows }) =>
-    console.log('insert',JSON.stringify(rows))
+    tx.executeSql(`select * from shedule;`, [], (_, { rows }) =>
+    console.log('inserted shedule',JSON.stringify(rows))
   );
-
-   tx.executeSql(
-     `insert into timetables (name) values (?);`,[parameterName]);
-    tx.executeSql(`select * from timetables;`, [], (_, { rows }) =>
-      console.log('inserted timetable',JSON.stringify(rows))
-  );
-
   
- 
-  
-    }
        
       
-  ),error => console.log(`create error: ${error}`);    
+}),error => console.log(`create error: ${error}`);    
+
     
+}
+
+export const shedules =() =>{
+  const [data1,setData1] = useState([])
+  let names = []
+  db1.transaction((tx) => {
+    
+    tx.executeSql(
+      `select * from shedule;`,[],(sqlTxn,res)=>{
+      let len = res.rows.length
+     
+              if (len > 0){
+                 
+                  for(let i=0;i<len;i++){
+
+                      let item = res.rows.item(i);
+                      if(item.grp == tablename){}
+                       names.push({
+                         subject: item.subject,
+                         week: item.week,
+                         day: item.day,
+                         starttime: item.starttime,
+                         endtime: item.endtime,
+                         teacher: item.teacher,
+                         teachercontact: item.teachercontact,
+                         grp: item.grp,
+                         place: item.place,
+                         placeInDay: item.placeInDay
+                       })
+                  }
+                  setData1(names)
+                  }
+                 
+                 
+   
+              })
+});
  
-    
+      return {data1,setData1}
 }
