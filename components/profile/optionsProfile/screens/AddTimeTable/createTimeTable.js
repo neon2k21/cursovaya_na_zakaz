@@ -27,7 +27,7 @@ const db1 = openDatabase();
 
 
 export  function createTimeTable(parameterName){
- 
+    var chopseteacher = parameterName
     var editedString = parameterName.replaceAll(' ','')
     .replaceAll('.','')
     .replaceAll('-','')
@@ -36,6 +36,7 @@ export  function createTimeTable(parameterName){
   
     let groupData = []
     let teacherData = []
+    let teacherNames = []
     let getTimeTable = []
     let subjectsData = []
     const startGroupCountRef = ref (db, 'Groups/')
@@ -49,7 +50,7 @@ export  function createTimeTable(parameterName){
      onValue(startTeacherCountRef , (snapshot) => {
          for(let i=0;i<snapshot.val().length;i++) {
             teacherData.push(snapshot.val()[i])
-           
+            teacherNames.push(snapshot.val()[i].name)
         }
        
     })
@@ -57,14 +58,15 @@ export  function createTimeTable(parameterName){
      onValue(startTimeTableCountRef , (snapshot) => {
         
          for(let i=0;i<snapshot.val().length;i++) {
-            
-                if(snapshot.val()[i].group == groupData.indexOf(parameterName) || snapshot.val()[i].teacher == teacherData.indexOf(parameterName) )
+                if(snapshot.val()[i].group == groupData.indexOf(parameterName) || (snapshot.val()[i].teacher) == teacherNames.indexOf(chopseteacher) )
                 getTimeTable.push(snapshot.val()[i])
             
            
         }
        
     })
+    console.log('time',getTimeTable.length)
+    console.log(`index of ${chopseteacher}: `, teacherNames.indexOf(chopseteacher))
     const startubjectCountRef = ref (db, 'Subjects/')
      onValue(startubjectCountRef , (snapshot) => {
          for(let i=0;i<snapshot.val().length;i++) {
@@ -73,35 +75,11 @@ export  function createTimeTable(parameterName){
         }
        
     })
-    
-    
-
-    let collectedData = []
-    console.log('timetable',getTimeTable.length)
-    for(let i=0;i<getTimeTable.length;i++){
-        collectedData.push({
-            subject : subjectsData[getTimeTable[i].subject],
-            week : getTimeTable[i].week,
-            day : getTimeTable[i].day,
-            starttime : getTimeTable[i].starttime,
-            endtime : getTimeTable[i].endtime,
-            teacher : teacherData[getTimeTable[i].teacher].name,
-            teachercontact : teacherData[getTimeTable[i].teacher].contact, 
-            group : groupData[getTimeTable[i].group],
-            place : getTimeTable[i].place,
-            placeInday : getTimeTable[i].placeInday
-        })
-        
-    }
-    //storage.set(parameterName,collectedData)
-    //console.log(storage.getAllKeys())
-
-    let names =[]
+    console.log(getTimeTable.length)
     db1.transaction((tx) => {
      for(let i = 0;i< getTimeTable.length;i++){
-       
       tx.executeSql(
-          `insert into shedule (subject, week, day, starttime, endtime, teacher, contact, grp, place, placeInDay) values (?,?,?,?,?,?,?,?,?,?)`,[
+          `insert into sheduleByGroup (subject, week, day, starttime, endtime, teacher, contact, grp, place, placeInDay,id) values (?,?,?,?,?,?,?,?,?,?,?)`,[
               subjectsData[getTimeTable[i].subject],
               Number(getTimeTable[i].week),
               Number(getTimeTable[i].day),
@@ -111,12 +89,14 @@ export  function createTimeTable(parameterName){
               teacherData[getTimeTable[i].teacher].contact,
               groupData[getTimeTable[i].group],
               getTimeTable[i].place,
-              Number(getTimeTable[i].placeInday)
+              Number(getTimeTable[i].placeInday),
+              getTimeTable[i].id
+              
           ]);
     }
    
-    tx.executeSql(`select * from shedule;`, [], (_, { rows }) =>
-    console.log('inserted shedule',JSON.stringify(rows))
+    tx.executeSql(`select * from sheduleByGroup;`, [], (_, { rows }) =>
+    console.log('inserted sheduleByGroup',JSON.stringify(rows))
   );
   
        
@@ -126,41 +106,3 @@ export  function createTimeTable(parameterName){
     
 }
 
-export const shedules =() =>{
-  const [data1,setData1] = useState([])
-  let names = []
-  db1.transaction((tx) => {
-    
-    tx.executeSql(
-      `select * from shedule;`,[],(sqlTxn,res)=>{
-      let len = res.rows.length
-     
-              if (len > 0){
-                 
-                  for(let i=0;i<len;i++){
-
-                      let item = res.rows.item(i);
-                      if(item.grp == tablename){}
-                       names.push({
-                         subject: item.subject,
-                         week: item.week,
-                         day: item.day,
-                         starttime: item.starttime,
-                         endtime: item.endtime,
-                         teacher: item.teacher,
-                         teachercontact: item.teachercontact,
-                         grp: item.grp,
-                         place: item.place,
-                         placeInDay: item.placeInDay
-                       })
-                  }
-                  setData1(names)
-                  }
-                 
-                 
-   
-              })
-});
- 
-      return {data1,setData1}
-}

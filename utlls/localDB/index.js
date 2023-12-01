@@ -23,53 +23,13 @@ export function deleteTimeTable(groupname) {
 
   db1.transaction((tx) => {
     tx.executeSql(
-      `delete from timetables where name= (?);`,[groupname]
+      `delete from shedule where grp= (?) or teacher=;`,[groupname]
     );
-    tx.executeSql(
-      `drop table if exists ${groupname.replaceAll(/[-,./]/g,'')};`
-    );
-    tx.executeSql(`select * from timetables`, [], (_, { rows }) =>
-        console.log(JSON.stringify(rows))
-    );
-}),error => console.log(`create error: ${error}`);
+    
+}),error => console.log(`delete error: ${error}`);
 
 }
     
-export function getTimeTableFromLocal(groupname){
-
-  let timetable = []
-    db1.transaction(txn => {
-        txn.executeSql(
-        `select * from ${groupname.replaceAll(/[-,./]/g,'')};`,[],(sqlTxn,res)=>{
-        let len = res.rows.length
-                if (len > 0){
-                   
-                    for(let i=0;i<len;i++){
-                        
-                        let item = res.rows.item(i);
-                        timetable.push({
-                          subject: item.subject,
-                          week: item.week,
-                          day: item.day,
-                          starttime: item.starttime,
-                          endtime: item.endtime,
-                          teacher: item.teacher,
-                          contact: item.contact,
-                          grp: item.grp,
-                          place: item.place,
-                          placeInDay: item.placeInDay,
-                        })
-
-                    }
-                }
-            }
-        );
-        txn.executeSql(`select * from ${groupname.replaceAll(/[-,./]/g,'')}`, [], (_, { rows }) =>
-        console.log(JSON.stringify(rows))
-      );
-        }),error => console.log(`get Tables error: ${error}`);
-        return timetable
-}
 
 
 

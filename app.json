@@ -18,6 +18,7 @@
       "supportsTablet": true
     },
     "android": {
+      "googleServicesFile": "./android/google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -26,6 +27,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b61aee13-ccba-42c1-a42a-f07641835a95"
+      }
     }
   }
 }

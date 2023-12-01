@@ -39,9 +39,9 @@ export default function Item_of_list(props){
              elevation: 5
           }}>
            
-            <Text className="text-2xl font-bold" style={{color: colors.text, marginVertical:wp(0)}} >{name}</Text>
-            <Text className="text-2xl font-bold" style={{color:colors.text, marginVertical:wp(1)}}>Контакты:</Text>
-            <Text className="text-2xl" style={{color:colors.text}}>{contacts}</Text>
+            <Text className="text-2xl font-bold" style={{color: colors.headertextandicons, marginVertical:wp(0)}} >{name}</Text>
+            <Text className="text-2xl font-bold" style={{color:colors.headertextandicons, marginVertical:wp(1)}}>Контакты:</Text>
+            <Text className="text-2xl" style={{color:colors.headertextandicons}}>{contacts}</Text>
             <Pressable
               style={[
                 { borderRadius: 20,
@@ -89,7 +89,7 @@ export default function Item_of_list(props){
             {place}
          </Text>
          <TouchableOpacity className="flex-row">
-          <ArrowTopRightOnSquareIcon size={wp(1)} color={colors.background}/>
+          <ArrowTopRightOnSquareIcon size={wp(6)} color={colors.background}/>
          <Text onPress={()=> setModalVisible(true)} style={{fontSize: wp(4),color: colors.text}}>
             {name}
          </Text>

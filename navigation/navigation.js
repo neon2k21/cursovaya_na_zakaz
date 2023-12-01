@@ -10,12 +10,12 @@ import {ArrowPathIcon} from 'react-native-heroicons/solid'
 import {Bars4Icon} from 'react-native-heroicons/solid'
 import {ArrowsRightLeftIcon} from 'react-native-heroicons/solid'
 import { TouchableOpacity,View } from 'react-native';
-import Auth from '../components/profile/optionsProfile/screens/Auth';
 import Add_timetable from '../components/profile/optionsProfile/screens/AddTimeTable/Screen/add_timetable';
 import GroupSearcher from '../components/profile/optionsProfile/screens/AddTimeTable/DropDowns/groupSearch';
 import TeacherSearcher from '../components/profile/optionsProfile/screens/AddTimeTable/DropDowns/teacherSearch';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { useTheme } from '../Theme/themeProvider';
+import AddLeon from '../components/profile/profileScreen/add';
 
 const Bottom_Tab = createBottomTabNavigator()
 const Profile_Stack = createNativeStackNavigator()
@@ -46,8 +46,6 @@ function DropDownsNavigator(){
     </Dropdowns_Stack.Navigator>
   )
 }
-
-
 function ProfileStackNavigator (){
   const {colors} = useTheme()
   return(
@@ -59,16 +57,14 @@ function ProfileStackNavigator (){
     }
     }
     >
-      <Profile_Stack.Screen name = "ds"  options={{headerShown: false}} component={Profile}/>
-      <Profile_Stack.Screen name = "Авторизация"  component={Auth}/>
-      
+      <Profile_Stack.Screen name = "ds"  options={{headerShown: false}} component={Profile}/>     
       <Profile_Stack.Screen name = "Добавить расписание"  options={{headerShown: false}} component={DropDownsNavigator}/>
+      <Profile_Stack.Screen name = "Добавить пару"  component={AddLeon}/>
     </Profile_Stack.Navigator>
   )
 
 
 }
-
 function BottomTabNavigator (){
   const {colors} = useTheme()
     return(
@@ -77,7 +73,7 @@ function BottomTabNavigator (){
                  tabBarStyle:{
                   backgroundColor: colors.background
                  },
-            tabBarShowLabel: false,
+           
             tabBarIcon: ({focused, color, size}) => {
                   if ( route.name === 'Расписание'){
                     return <ClockIcon size ={size} color ={focused? 'green' : 'gray'}/>
@@ -90,12 +86,11 @@ function BottomTabNavigator (){
           })}>
             
             <Bottom_Tab.Screen name='Расписание' options={({ route })=>({
-                    
-                    title: "l",
+                  
                     headerStyle:{
                       backgroundColor: colors.background,
                     },
-                    
+                    unmountOnBlur: true,
                     headerTitleAlign: 'left',
                     headerTitleStyle: {
                       textAlign:"center",
@@ -119,6 +114,8 @@ function BottomTabNavigator (){
                     headerStyle:{
                       backgroundColor: colors.background,
                     },
+                    unmountOnBlur: true,
+                    headerShown: false,
                     //route.params.name.length === 0 ? 'Вберите расписание' : route.params.name,
                     headerTitleAlign: 'left',
                     headerTitleStyle: {
@@ -140,10 +137,6 @@ function BottomTabNavigator (){
         </Bottom_Tab.Navigator>
     )
 }
-
-
-
-
 
 export default function AppNavigation(){
     return(

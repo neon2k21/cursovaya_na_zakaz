@@ -45,7 +45,7 @@ export default function Profile(){
     let names = []
     db1.transaction((tx) => {
      tx.executeSql(
-      `select distinct grp from shedule;`,[],(sqlTxn,res)=>{
+      `select distinct grp from sheduleByGroup;`,[],(sqlTxn,res)=>{
       let len = res.rows.length
               if (len > 0){
                  
@@ -60,10 +60,27 @@ export default function Profile(){
                   console.log('3', names)
                  
               }
-          });
-          
-  
-      });
+          });      
+          tx.executeSql(
+            `select distinct teacher from sheduleByTeacher;`,[],(sqlTxn,res)=>{
+            let len = res.rows.length
+                    if (len > 0){
+                       
+                        for(let i=0;i<len;i++){
+                         
+                            let item = res.rows.item(i);
+                            names.push(item.teacher)
+                          
+        
+                        }
+                        setData(names)
+                        console.log('3', names)
+                       
+                    }
+                });
+            });
+     
+      
    }
   
      useEffect( () => {
@@ -94,14 +111,13 @@ export default function Profile(){
                 <Text className="font-bold" style={{fontSize:wp(5),justifyContent:'center',padding:wp(2), color: colors.text}}>
                     Дополнительные параметры:
                 </Text>
-                <View className="flex-row w-full border-2 rounded-3xl justify-center" style={{borderColor:colors.background,marginBottom:wp(2),height:wp(15)}}>
+                <TouchableOpacity className="flex-row w-full border-2 rounded-3xl justify-center" style={{borderColor:colors.background,marginBottom:wp(2),height:wp(15)}}
+                onPress={()=>navigate('Добавить пару')}>
                   <Text className=" text-2xl font-bold" style={{justifyContent:'center',textAlignVertical:'center',color: colors.text }}>
-                        Уведомления
+                      Добавить пару
                     </Text>
-                </View>
-                
-                
-                <View className="flex-row w-full border-2 rounded-3xl justify-center" style={{borderColor:colors.background,marginBottom:wp(2),height:wp(15)}}>
+                </TouchableOpacity>         
+                 <View className="flex-row w-full border-2 rounded-3xl justify-center" style={{borderColor:colors.background,marginBottom:wp(2),height:wp(15)}}>
                   <Text className="text-2xl font-bold" style={{justifyContent:'center',textAlignVertical:'center', color: colors.text}}>
                         Темная тема
                     </Text>

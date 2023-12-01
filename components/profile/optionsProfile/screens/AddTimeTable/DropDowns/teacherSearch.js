@@ -9,6 +9,7 @@ import Profile from "../../../../../../screens/Profile";
 import TimeTable from "../../../../../../screens/TimeTable";
 import filter from "lodash/filter"
 import { useTheme } from "../../../../../../Theme/themeProvider";
+import { createTimeTableByTeacher } from "../createTimeTableByTeacher";
 
 
 
@@ -122,7 +123,7 @@ return(
       data={data}
       // keyExtractor={(item) =>item.id}
       renderItem={({item})=> (
-        <TouchableOpacity onPress={()=>{createTimeTable(item);navigation.push('ds', TimeTable);}}
+        <TouchableOpacity onPress={()=>{createTimeTableByTeacher(item);navigation.push('ds', TimeTable);}}
                   className="flex-row w-full border-2 rounded-3xl justify-center " 
                   style={{borderColor:colors.background,marginBottom:wp(2)}}>
                     <Text style={{color:colors.text}}  className=" text-2xl font-bold">
