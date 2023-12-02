@@ -1,5 +1,7 @@
 import * as SQLite from "expo-sqlite"
 import { Platform } from 'react-native';
+import {ref, onValue} from 'firebase/database'
+import {db} from '../firebase/index'
 
 function openDatabase() {
   if (Platform.OS === "web"){
@@ -16,18 +18,33 @@ function openDatabase() {
 }
 
 const db1 = openDatabase();
-
+let teacherData = []
+const startTeacherCountRef = ref (db, 'Teachers/')
+    onValue(startTeacherCountRef , (snapshot) => {
+        for(let i=0;i<snapshot.val().length;i++) {
+          
+          teacherData.push(snapshot.val()[i].name)
+       }
+      
+   })
 
 
 export function deleteTimeTable(groupname) {
-
-  db1.transaction((tx) => {
-    tx.executeSql(
-      `delete from shedule where grp= (?) or teacher=;`,[groupname]
-    );
-    
-}),error => console.log(`delete error: ${error}`);
-
+  console.error('del',groupname)
+  if(teacherData.indexOf(groupname)==-1){
+  
+      db1.transaction((tx) => {
+       tx.executeSql(
+        `delete from sheduleByGroup where grp= (?);`,[groupname]);
+          
+    }
+  )}
+  else{
+    db1.transaction((tx) => {
+      tx.executeSql(
+       `delete from sheduleByTeacher where teacher= (?);`,[groupname]);
+   }
+ )}
 }
     
 

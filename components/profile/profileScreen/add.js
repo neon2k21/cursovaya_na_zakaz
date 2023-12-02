@@ -1,11 +1,12 @@
-import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet, SafeAreaView } from "react-native";
+import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet, SafeAreaView, Modal } from "react-native";
 import {db} from '../../../utlls/firebase/index'
 import {ref, onValue,set, endBefore} from 'firebase/database'
 import { Dropdown } from 'react-native-element-dropdown';
 import {useState} from 'react'
 import AntDesign from '@expo/vector-icons/AntDesign';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-
+import DatePicker from 'react-native-modern-datepicker'
+import { getToday, getFormatedDate } from "react-native-modern-datepicker";
 
 const data_teachers = [
 {value:0,label:"Аблаева Г.Р."},
@@ -333,6 +334,7 @@ let selected_teacher = null;
 let selected_day = null;
 let selected_week = null;
 let selected_place = "";
+let selected_date = null;
 function click(){
   timetables = []
    onValue(ref (db, 'TimeTable/') , (snapshot) => {
@@ -377,7 +379,7 @@ function click(){
   
     console.log(`group: ${selected_group}, subject: ${selected_subject},placeinday: 
     ${selected_para+1}, place: ${selected_place},teacher: ${selected_teacher}, starttime: ${startTime},
-     endtime: ${endTime}, week: ${selected_week}, day: ${selected_day}, id ${timetables.length} `)
+     endtime: ${endTime}, week: ${selected_week}, day: ${selected_day}, id ${timetables.length}, date: ${selected_date} `)
 }
 else console.log(`ид группы: ${selected_group}, ид предмета: ${selected_subject},ид пары: 
 ${selected_para}, место: ${selected_place},ид учителя: ${selected_teacher}, id ${timetables.length}`)
@@ -657,9 +659,18 @@ const DropdownParaComponent = () => {
 
   
 export default function AddLeon(){
-
-
-
+const [open,setOpen] = useState(false);
+const [date,setDate] = useState(false);
+const today = new Date();
+const startDate = getFormatedDate(today.setDate(today.getDate()+1,'YYYY/MM/DD'))
+function handleOnPress(){
+  setOpen(!open)
+}
+function handleChange(propDate){
+  setDate(propDate)
+  selected_date = propDate
+  console.log(propDate)
+}
     return (
         <SafeAreaView className="w-full h-full">
              <Image 
@@ -673,6 +684,45 @@ export default function AddLeon(){
                     <DropdownTeacherComponent/>
                     <DropdowndayComponent/>
                     <DropdownweekComponent/>
+                    <TouchableOpacity onPress={handleOnPress }>
+                      <Text>
+                        Выберите дату
+                      </Text>
+                    </TouchableOpacity>
+                    <Modal
+                    animationType="slide"
+                    transparent={true}
+                    visible={open}>
+                      <View className="flex-1 justifyContent-center" >
+          <View style={{
+             margin: 40,
+             backgroundColor: 'white',
+             borderRadius: 20,
+             alignItems: 'center',
+             shadowColor: '#000',
+             shadowOffset: {
+               width: 0,
+               height: 2,
+             },
+             shadowOpacity: 0.25,
+             shadowRadius: 4,
+             elevation: 5
+          }}>
+            <DatePicker 
+            mode = 'calendar'
+            selected={date}
+            minimumDate={startDate}
+            onDateChange={handleChange}
+            />
+            <TouchableOpacity onPress={handleOnPress}>
+              <Text>
+                Закрыть
+              </Text>
+            </TouchableOpacity>
+            </View>
+            </View>
+
+                    </Modal>
                     <TextInput className="w-3/4 border-2 rounded-full"
                     style={{height:wp(15),justifyContent:'center',alignSelf:'center', borderColor:'white',paddingHorizontal:wp(10)}}
                     onChangeText={(text) =>{
