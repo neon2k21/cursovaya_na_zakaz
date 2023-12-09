@@ -1,8 +1,7 @@
 import messaging from '@react-native-firebase/messaging'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {db} from '../firebase/index'
-import {ref, set} from 'firebase/database'
-
+import {ref, set, onValue} from 'firebase/database'
 
 export async function requestUserPermission(){
     
@@ -26,12 +25,16 @@ export async function requestUserPermission(){
             const fcmtoken = await messaging().getToken();
             if(fcmtoken){
               console.log(fcmtoken,'new token')
-              set(ref(db,'Tokens/'),fcmtoken);
+              tokenData = []
+              const startGroupCountRef = ref (db, 'Tokens/')
+              onValue(startGroupCountRef , (snapshot) => {
+              for(let i=0;i<snapshot.val().length;i++) {
+                tokenData.push( snapshot.val()[i])
+              }})
+              set(ref(db,`Tokens/`+tokenData.length),fcmtoken);
               await AsyncStorage.setItem("fcmtoken",fcmtoken)
             }
-            else{
-
-            }
+            
         } catch (error) {
             console.log(error)
         }

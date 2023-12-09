@@ -39,6 +39,7 @@ export  function createTimeTableByTeacher(parameterName){
     let teacherNames = []
     let getTimeTable = []
     let subjectsData = []
+    let extraTimeTable = []
     const startGroupCountRef = ref (db, 'Groups/')
      onValue(startGroupCountRef , (snapshot) => {
          for(let i=0;i<snapshot.val().length;i++) {
@@ -75,14 +76,22 @@ export  function createTimeTableByTeacher(parameterName){
         }
        
     })
+    const startExtraTimeTableRef = ref (db, 'extraTimeTable/')
+    onValue(startExtraTimeTableRef , (snapshot) => {
+        for(let i=0;i<snapshot.val().length;i++) {
+          extraTimeTable.push(snapshot.val()[i])
+       }
+      
+   })
+
     console.log(getTimeTable.length)
     db1.transaction((tx) => {
      for(let i = 0;i< getTimeTable.length;i++){
       tx.executeSql(
           `insert into sheduleByTeacher (subject, week, day, starttime, endtime, teacher, contact, grp, place, placeInDay,id) values (?,?,?,?,?,?,?,?,?,?,?)`,[
               subjectsData[getTimeTable[i].subject],
-              Number(getTimeTable[i].week),
               Number(getTimeTable[i].day),
+              Number(getTimeTable[i].week),
               getTimeTable[i].starttime,
               getTimeTable[i].endtime,
               teacherData[getTimeTable[i].teacher].name,
@@ -99,7 +108,27 @@ export  function createTimeTableByTeacher(parameterName){
     console.log('inserted sheduleByTeacher',JSON.stringify(rows))
   );
   
-       
+  for(let i = 0;i< extraTimeTable.length;i++){
+    tx.executeSql(
+        `insert into extraShedule (subject, week, day, starttime, endtime, teacher, contact, grp, place, placeInDay,id, datepara) values (?,?,?,?,?,?,?,?,?,?,?,?)`,[
+           ( "ДОП/ПЕРЕНОС: "+subjectsData[extraTimeTable[i].subject]),
+            Number(extraTimeTable[i].day),
+            Number(extraTimeTable[i].week),
+            extraTimeTable[i].starttime,
+            extraTimeTable[i].endtime,
+            teacherData[extraTimeTable[i].teacher].name,
+            teacherData[extraTimeTable[i].teacher].contact,
+            groupData[extraTimeTable[i].group],
+            extraTimeTable[i].place,
+            Number(extraTimeTable[i].placeinday),
+            extraTimeTable[i].id,
+            extraTimeTable[i].date
+        ]);
+  }
+ 
+  tx.executeSql(`select * from extraShedule;`, [], (_, { rows }) =>
+  console.log('inserted extraShedule',JSON.stringify(rows))
+);
       
 }),error => console.log(`create error: ${error}`);    
 

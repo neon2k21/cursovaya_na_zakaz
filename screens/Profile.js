@@ -1,6 +1,8 @@
 import { View,Text, ScrollView, TouchableOpacity,Image, Switch, FlatList } from "react-native";
 import {useNavigation} from '@react-navigation/native';
 import { useEffect, useLayoutEffect, useState } from "react";
+import Auth from "../components/profile/profileScreen/auth";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 import CardTimeTable from "../components/profile/profileScreen/timetable_card";
@@ -26,9 +28,15 @@ function openDatabase() {
 
 
 const db1 = openDatabase();
+var username =''
 
-
-
+async function getUerToken(){
+  await AsyncStorage.getItem("uertoken").then(time =>{
+    username = time
+     console.log(username)
+   })
+ 
+ }
 
 export default function Profile(){
   const {navigate} = useNavigation()
@@ -37,6 +45,7 @@ export default function Profile(){
    const [isEnabled, setIsEnabled] = useState(false);
    const [data, setData] = useState();
    const ToggleTheme = ()=>{
+    
     dark ? setScheme('light') : setScheme('dark')
     setIsEnabled(previousState => !previousState)
    }
@@ -85,17 +94,19 @@ export default function Profile(){
   
      useEffect( () => {
       getTimes()
+      getUerToken()
     },[])
       
-
-    return(
+if(username.length!=0){
+   return(
         <View className="w-full h-full ">
+         
              <Image 
         blurRadius={70} 
         source={require('../assets/backgrounds/bg.jpg')} 
         className="absolute w-full h-full" />
             
-           
+            <Auth user='Вход вполнен'/>
             <FlatList
       horizontal={true}
       data={data}
@@ -142,4 +153,57 @@ export default function Profile(){
             </View>
         </View>
     )
+}
+else {
+  
+    return(
+         <View className="w-full h-full ">
+          
+              <Image 
+         blurRadius={70} 
+         source={require('../assets/backgrounds/bg.jpg')} 
+         className="absolute w-full h-full" />
+             
+             <Auth user='Вход'/>
+             <FlatList
+       horizontal={true}
+       data={data}
+       renderItem={({item})=> (
+         console.log('item',item),
+         <CardTimeTable  text={item} />
+       )
+       
+     }
+       />
+             <View style={{borderColor:colors.background}} className=" w-full h-3/6 border-2 rounded-t-2xl justify-center" >
+                 <View className="h-full w-full" style={{padding:wp(6)}}>
+                 <Text className="font-bold" style={{fontSize:wp(5),justifyContent:'center',padding:wp(2), color: colors.text}}>
+                     Дополнительные параметры:
+                 </Text>    
+                  <View className="flex-row w-full border-2 rounded-3xl justify-center" style={{borderColor:colors.background,marginBottom:wp(2),height:wp(15)}}>
+                   <Text className="text-2xl font-bold" style={{justifyContent:'center',textAlignVertical:'center', color: colors.text}}>
+                         Темная тема
+                     </Text>
+                     <Switch
+                         trackColor={{false: '#767577', true: '#81b0ff'}}
+                         thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
+                         ios_backgroundColor="#3e3e3e"
+                         onValueChange={ToggleTheme}
+                         value={isEnabled}
+                     />
+                 </View>
+                 
+                 <TouchableOpacity className="flex-row w-full border-2 rounded-3xl justify-center" 
+                 style={{borderColor:colors.background,marginBottom:wp(2),height:wp(15)}}
+                 onPress={()=>navigate('Добавить расписание', Add_timetable)}>
+                   <Text className=" text-2xl font-bold" style={{justifyContent:'center',textAlignVertical:'center',color: colors.text}}>
+                       Добавить расписание
+                     </Text>
+                 </TouchableOpacity>
+                 </View>
+             </View>
+         </View>
+     )
+}
+   
 }

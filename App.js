@@ -43,14 +43,14 @@ export default function App() {
         , [], (_, { rows }) =>
     console.log('sheduleByTeacher created',JSON.stringify(rows))
         );
-    tx.executeSql(
-      `create table if not exists sheduleByExtend (subject text, week integer, day integer, starttime text, endtime text, teacher text, contact text, grp text, place text, placeInDay integer, id text, date text);`
+        tx.executeSql(
+          `create table if not exists extraShedule (subject text, week integer, day integer, starttime text, endtime text, teacher text, contact text, grp text, place text, placeInDay integer, id text, datepara text);`
           , [], (_, { rows }) =>
-      console.log('sheduleByExtend created',JSON.stringify(rows))
-      );
-
-   
+      console.log('sheduleByTeacher created',JSON.stringify(rows))
+          );
    });
+
+  
 
   return  ( 
     <ThemeProvider>
