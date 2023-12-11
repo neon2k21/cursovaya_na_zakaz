@@ -1,10 +1,11 @@
 import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet, SafeAreaView, Modal } from "react-native";
 import {db} from '../../utlls/firebase/index'
-import {ref, onValue,set,update } from 'firebase/database'
+import {ref, onValue,update } from 'firebase/database'
 import { Dropdown } from 'react-native-element-dropdown';
 import {useState} from 'react'
 import AntDesign from '@expo/vector-icons/AntDesign';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { useNavigation } from "@react-navigation/native";
 
 
 const data_teachers = [
@@ -51,7 +52,6 @@ const data_para = [
     { label: '6: 17:20 - 18:50', value: 5 },
     { label: '7: 19:00 - 20:30', value: 6 },
   ];
-
 const data_subject = [
     {value:0,label:"Математика"},
     {value:1,label:"Физика"},
@@ -258,7 +258,10 @@ let selected_subject = null;
 let selected_para = null;
 let selected_teacher = null;
 let selected_place = "";
+
+
 function click(id){
+  const {navigation} = useNavigation()
   console.log(id)
   timetables = []
    onValue(ref (db, 'TimeTable/'+id) , (snapshot) => {
@@ -310,21 +313,14 @@ console.log(timetables)
     endtime:endTime,
     id:id,
    });
-   timetables = []
-   onValue(ref (db, 'TimeTable/'+id) , (snapshot) => {
-    
-      timetables.push( snapshot.val())
-      
-   
-});
-   console.log(timetables)
+   navigation.navigate('Расписание')
 }
 else console.log(`ошибка`)
 }
 
-const DropdownParaComponent = () => {
+const DropdownParaComponent = (props) => {
     const [value, setValue] = useState(null);
-
+    const {para} = props
     const renderItem = item => {
       return (
         <View style={styles.item}>
@@ -353,7 +349,7 @@ const DropdownParaComponent = () => {
         maxHeight={300}
         labelField="label"
         valueField="value"
-        placeholder="Выберите время"
+        placeholder={data_para[para-1].label}
         searchPlaceholder="Поиск..."
         value={value}
         onChange={item => {
@@ -367,54 +363,10 @@ const DropdownParaComponent = () => {
       />
     );
   };
-  const DropdownGroupComponent = () => {
+
+  const DropdownSubjectComponent = (props) => {
     const [value, setValue] = useState(null);
-
-    const renderItem = item => {
-      return (
-        <View style={styles.item}>
-          <Text style={styles.textItem}>{item.label}</Text>
-          {item.value === value && (
-            <AntDesign
-              style={styles.icon}
-              color="black"
-              name="Safety"
-              size={20}
-            />
-          )}
-        </View>
-      );
-    };
-
-    return (
-      <Dropdown
-        style={styles.dropdown}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
-        iconStyle={styles.iconStyle}
-        data={data_group}
-        search
-        maxHeight={300}
-        labelField="label"
-        valueField="value"
-        placeholder="Выберите группу"
-        searchPlaceholder="Поиск..."
-        value={value}
-        onChange={item => {
-          setValue(item.value);
-          selected_group = item.value
-        }}
-        renderLeftIcon={() => (
-          <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
-        )}
-        renderItem={renderItem}
-      />
-    );
-  };
-  const DropdownSubjectComponent = () => {
-    const [value, setValue] = useState(null);
-
+    const {sub} = props
     const renderItem = item => {
       return (
         <View style={styles.item}>
@@ -443,12 +395,12 @@ const DropdownParaComponent = () => {
         maxHeight={300}
         labelField="label"
         valueField="value"
-        placeholder="Выберите предмет"
+        placeholder={sub}
         searchPlaceholder="Поиск..."
         value={value}
         onChange={item => {
           setValue(item.value);
-          selected_subject = item.value
+         selected_subject = item.value
         }}
         renderLeftIcon={() => (
           <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
@@ -457,9 +409,9 @@ const DropdownParaComponent = () => {
       />
     );
   };
-  const DropdownTeacherComponent = () => {
+  const DropdownTeacherComponent = (props) => {
     const [value, setValue] = useState(null);
-
+    const {name} = props
     const renderItem = item => {
       return (
         <View style={styles.item}>
@@ -488,7 +440,7 @@ const DropdownParaComponent = () => {
         maxHeight={300}
         labelField="label"
         valueField="value"
-        placeholder="Выберите преподавателя"
+        placeholder={name}
         searchPlaceholder="Поиск..."
         value={value}
         onChange={item => {
@@ -502,96 +454,7 @@ const DropdownParaComponent = () => {
       />
     );
   };
-  const DropdowndayComponent = () => {
-    const [value, setValue] = useState(null);
 
-    const renderItem = item => {
-      return (
-        <View style={styles.item}>
-          <Text style={styles.textItem}>{item.label}</Text>
-          {item.value === value && (
-            <AntDesign
-              style={styles.icon}
-              color="black"
-              name="Safety"
-              size={20}
-            />
-          )}
-        </View>
-      );
-    };
-
-    return (
-      <Dropdown
-        style={styles.dropdown}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
-        iconStyle={styles.iconStyle}
-        data={data_days}
-        search
-        maxHeight={300}
-        labelField="label"
-        valueField="value"
-        placeholder="Выберите день"
-        searchPlaceholder="Поиск..."
-        value={value}
-        onChange={item => {
-          setValue(item.value);
-          selected_day = item.value
-        }}
-        renderLeftIcon={() => (
-          <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
-        )}
-        renderItem={renderItem}
-      />
-    );
-  };
-  const DropdownweekComponent = () => {
-    const [value, setValue] = useState(null);
-
-    const renderItem = item => {
-      return (
-        <View style={styles.item}>
-          <Text style={styles.textItem}>{item.label}</Text>
-          {item.value === value && (
-            <AntDesign
-              style={styles.icon}
-              color="black"
-              name="Safety"
-              size={20}
-            />
-          )}
-        </View>
-      );
-    };
-
-    return (
-      <Dropdown
-        style={styles.dropdown}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        inputSearchStyle={styles.inputSearchStyle}
-        iconStyle={styles.iconStyle}
-        data={data_week}
-        search
-        maxHeight={300}
-        labelField="label"
-        valueField="value"
-        placeholder="Выберите неделю"
-        searchPlaceholder="Поиск..."
-        value={value}
-        onChange={item => {
-          setValue(item.value);
-          selected_week = item.value
-        }}
-        renderLeftIcon={() => (
-          <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
-        )}
-        renderItem={renderItem}
-      />
-    );
-  };
 
 
   
@@ -604,12 +467,15 @@ export default function Change({route}){
                 source={require('../../assets/backgrounds/bg.jpg')} 
                 className="absolute w-full h-full" />
                 <View className="h-2/4 w-full">
-                     <DropdownSubjectComponent/>
-                     <DropdownParaComponent/>
-                     <DropdownTeacherComponent/>
+                     <DropdownSubjectComponent sub={route.params.subject}/>
+                     <DropdownParaComponent para={route.params.para}/>
+                     <DropdownTeacherComponent name={route.params.name}/>
 
                     <TextInput className="w-3/4 border-2 rounded-full"
                     style={{height:wp(15),justifyContent:'center',alignSelf:'center', borderColor:'white',paddingHorizontal:wp(10)}}
+                    placeholder={route.params.place}
+                    placeholderTextColor={'white'}
+                  
                     onChangeText={(text) =>{
                         selected_place = text;
                      }}
@@ -619,9 +485,10 @@ export default function Change({route}){
                     style={{height:wp(15),alignSelf:'center',margin:wp(10),justifyContent:'center',borderColor:'white'}}
                     onPress={()=>click(parseInt(route.params.id))}>
                         <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:wp(7),color:'white'}}>
-                            ОК
+                           Изменить пару
                         </Text>
                     </TouchableOpacity>
+                    
                 </View>
             
 

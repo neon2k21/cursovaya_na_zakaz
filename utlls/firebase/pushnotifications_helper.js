@@ -31,7 +31,7 @@ export async function requestUserPermission(){
               for(let i=0;i<snapshot.val().length;i++) {
                 tokenData.push( snapshot.val()[i])
               }})
-              set(ref(db,`Tokens/`+tokenData.length),fcmtoken);
+              set(ref(db,`Tokens/`+tokenData.length),{userToken: fcmtoken});
               await AsyncStorage.setItem("fcmtoken",fcmtoken)
             }
             

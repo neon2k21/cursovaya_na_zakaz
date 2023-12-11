@@ -1,4 +1,4 @@
-import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet, SafeAreaView, Modal } from "react-native";
+import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet, SafeAreaView, Modal, Alert } from "react-native";
 import {db} from '../../../utlls/firebase/index'
 import {ref, onValue,set } from 'firebase/database'
 import { Dropdown } from 'react-native-element-dropdown';
@@ -7,6 +7,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import DatePicker from 'react-native-modern-datepicker'
 import { getToday, getFormatedDate } from "react-native-modern-datepicker";
+import { useNavigation } from "@react-navigation/native";
 
 const data_teachers = [
 {value:0,label:"Аблаева Г.Р."},
@@ -336,7 +337,7 @@ let selected_week = null;
 let selected_place = "";
 let selected_date = null;
 function click(){
-  timetables = []
+   timetables = []
    onValue(ref (db, 'TimeTable/') , (snapshot) => {
     for(let i=0;i<snapshot.val().length;i++) {
       timetables.push( snapshot.val()[i])
@@ -396,12 +397,16 @@ extraTimeTable = []
     id:extraTimeTable.length,
     date: selected_date
    });
-    console.log(`group: ${selected_group}, subject: ${selected_subject},placeinday: 
-    ${selected_para+1}, place: ${selected_place},teacher: ${selected_teacher}, starttime: ${startTime},
-     endtime: ${endTime}, week: ${selected_week}, day: ${selected_day}, id ${extraTimeTable.length}, date: ${selected_date} `)
+   Alert.alert('Добавление пары',
+    `Вы добавили пару на ${selected_date}` ,[
+    {
+      text: 'ОК'
+    }
+   ])
+    console.log(`да `)
+   
 }
-else console.log(`ид группы: ${selected_group}, ид предмета: ${selected_subject},ид пары: 
-${selected_para}, место: ${selected_place},ид учителя: ${selected_teacher}, id ${timetables.length}`)
+
 }
 
 const DropdownParaComponent = () => {

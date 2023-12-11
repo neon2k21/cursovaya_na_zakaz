@@ -302,8 +302,7 @@ console.log("tablename",tablename)
         <TouchableOpacity onPress={()=>{navigation.navigate('Изменить',{
         name: item.teacher,
         subject: item.subject,
-        start: item.starttime,
-        end: item.endtime,
+        para: item.placeInDay,
         id: item.id,
         place: item.place,
         })}}>
