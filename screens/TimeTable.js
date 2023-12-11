@@ -69,10 +69,12 @@ async function getGro(){
 
 
 export  default function TimeTable(){ 
+  const {colors} = useTheme()
   const navigation = useNavigation()
   React.useLayoutEffect(() =>{
     navigation.setOptions({
         headerTitle: tablename,
+        backgroundColor: colors.background,
         headerRight: () => (
           <View className="flex-row" style={{gap:wp(5),paddingHorizontal:wp(5)}}>
             
@@ -107,7 +109,7 @@ export  default function TimeTable(){
   
 console.log("tablename",tablename)
 
-  const {colors} = useTheme()
+  
   const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
@@ -1458,11 +1460,11 @@ console.log("tablename",tablename)
     
       {...props}
       indicatorStyle={{ backgroundColor: 'green'}}
-         style={{ backgroundColor: 'white' }}
+         style={{ backgroundColor: colors.background }}
          
          
          renderLabel={({ route}) => (
-          <Text style={{ fontSize:wp(3.2), color: 'black', margin: 8, fontWeight: "bold" }}>
+          <Text style={{ fontSize:wp(3.2), color: colors.headertextandicons, margin: 8, fontWeight: "bold" }}>
             {route.title}
           </Text>
         )}

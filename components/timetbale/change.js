@@ -1,4 +1,4 @@
-import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet, SafeAreaView, Modal } from "react-native";
+import { Image, Text, TextInput, TouchableOpacity, View, StyleSheet, SafeAreaView, Modal, Alert } from "react-native";
 import {db} from '../../utlls/firebase/index'
 import {ref, onValue,update } from 'firebase/database'
 import { Dropdown } from 'react-native-element-dropdown';
@@ -6,6 +6,7 @@ import {useState} from 'react'
 import AntDesign from '@expo/vector-icons/AntDesign';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { useNavigation } from "@react-navigation/native";
+import { useTheme } from "../../Theme/themeProvider";
 
 
 const data_teachers = [
@@ -261,7 +262,7 @@ let selected_place = "";
 
 
 function click(id){
-  const {navigation} = useNavigation()
+  
   console.log(id)
   timetables = []
    onValue(ref (db, 'TimeTable/'+id) , (snapshot) => {
@@ -313,21 +314,32 @@ console.log(timetables)
     endtime:endTime,
     id:id,
    });
-   navigation.navigate('Расписание')
+   Alert.alert('Изменение пары',
+   `Вы изменили пару с ид: ${id}` ,[
+   {
+     text: 'ОК'
+   }
+  ])
 }
 else console.log(`ошибка`)
 }
 
 const DropdownParaComponent = (props) => {
-    const [value, setValue] = useState(null);
+   
     const {para} = props
+    const {colors} = useTheme()
+    const [value, setValue] = useState(null);
+
     const renderItem = item => {
       return (
         <View style={styles.item}>
           <Text style={styles.textItem}>{item.label}</Text>
           {item.value === value && (
             <AntDesign
-              style={styles.icon}
+              style={{
+                color:colors.headertextandicons,
+                marginRight: 5,
+              }}
               color="black"
               name="Safety"
               size={20}
@@ -339,9 +351,22 @@ const DropdownParaComponent = (props) => {
 
     return (
       <Dropdown
-        style={styles.dropdown}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
+        style={{ margin: 8,
+          height: 50,
+          borderRadius: 12,
+          borderColor:colors.background,
+          borderWidth:2,
+          padding: 12,      
+          shadowOpacity: 0.2,
+          shadowRadius: 1.41,
+        }}
+        placeholderStyle={{
+          color:colors.text,
+          fontSize: 16,}}
+        selectedTextStyle={{
+          color:colors.text,
+        fontSize: 16,
+      }}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
         data={data_para}
@@ -365,15 +390,21 @@ const DropdownParaComponent = (props) => {
   };
 
   const DropdownSubjectComponent = (props) => {
-    const [value, setValue] = useState(null);
+    
     const {sub} = props
+    const {colors} = useTheme()
+    const [value, setValue] = useState(null);
+
     const renderItem = item => {
       return (
         <View style={styles.item}>
           <Text style={styles.textItem}>{item.label}</Text>
           {item.value === value && (
             <AntDesign
-              style={styles.icon}
+              style={{
+                color:colors.headertextandicons,
+                marginRight: 5,
+              }}
               color="black"
               name="Safety"
               size={20}
@@ -385,9 +416,22 @@ const DropdownParaComponent = (props) => {
 
     return (
       <Dropdown
-        style={styles.dropdown}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
+        style={{ margin: 8,
+          height: 50,
+          borderRadius: 12,
+          borderColor:colors.background,
+          borderWidth:2,
+          padding: 12,      
+          shadowOpacity: 0.2,
+          shadowRadius: 1.41,
+        }}
+        placeholderStyle={{
+          color:colors.text,
+          fontSize: 16,}}
+        selectedTextStyle={{
+          color:colors.text,
+        fontSize: 16,
+      }}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
         data={data_subject}
@@ -410,15 +454,21 @@ const DropdownParaComponent = (props) => {
     );
   };
   const DropdownTeacherComponent = (props) => {
-    const [value, setValue] = useState(null);
+    
     const {name} = props
+    const {colors} = useTheme()
+    const [value, setValue] = useState(null);
+
     const renderItem = item => {
       return (
         <View style={styles.item}>
           <Text style={styles.textItem}>{item.label}</Text>
           {item.value === value && (
             <AntDesign
-              style={styles.icon}
+              style={{
+                color:colors.headertextandicons,
+                marginRight: 5,
+              }}
               color="black"
               name="Safety"
               size={20}
@@ -430,9 +480,22 @@ const DropdownParaComponent = (props) => {
 
     return (
       <Dropdown
-        style={styles.dropdown}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
+        style={{ margin: 8,
+          height: 50,
+          borderRadius: 12,
+          borderColor:colors.background,
+          borderWidth:2,
+          padding: 12,      
+          shadowOpacity: 0.2,
+          shadowRadius: 1.41,
+        }}
+        placeholderStyle={{
+          color:colors.text,
+          fontSize: 16,}}
+        selectedTextStyle={{
+          color:colors.text,
+        fontSize: 16,
+      }}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
         data={data_teachers}
@@ -459,6 +522,7 @@ const DropdownParaComponent = (props) => {
 
   
 export default function Change({route}){
+  const {colors} = useTheme()
     console.log(route)
     return (
         <SafeAreaView className="w-full h-full">
@@ -472,9 +536,9 @@ export default function Change({route}){
                      <DropdownTeacherComponent name={route.params.name}/>
 
                     <TextInput className="w-3/4 border-2 rounded-full"
-                    style={{height:wp(15),justifyContent:'center',alignSelf:'center', borderColor:'white',paddingHorizontal:wp(10)}}
+                    style={{height:wp(15),justifyContent:'center',alignSelf:'center', borderColor:colors.background,paddingHorizontal:wp(10)}}
                     placeholder={route.params.place}
-                    placeholderTextColor={'white'}
+                    placeholderTextColor={colors.text}
                   
                     onChangeText={(text) =>{
                         selected_place = text;
@@ -482,9 +546,9 @@ export default function Change({route}){
                      />
                     {/* кнопка добавления*/}
                     <TouchableOpacity className="w-3/4  border-2 rounded-full"
-                    style={{height:wp(15),alignSelf:'center',margin:wp(10),justifyContent:'center',borderColor:'white'}}
+                    style={{height:wp(15),alignSelf:'center',margin:wp(10),justifyContent:'center',borderColor:colors.background}}
                     onPress={()=>click(parseInt(route.params.id))}>
-                        <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:wp(7),color:'white'}}>
+                        <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:wp(7),color:colors.text}}>
                            Изменить пару
                         </Text>
                     </TouchableOpacity>

@@ -25,10 +25,40 @@ const Dropdowns_Stack = createNativeStackNavigator()
 
 
 function LessonNavigator(){
+  const {colors} = useTheme()
   return(
     <Lesson_Stack.Navigator>
-    <Lesson_Stack.Screen name="ee" component={TimeTable}/>
-    <Lesson_Stack.Screen name="Изменить" component={Change}/>
+    <Lesson_Stack.Screen name="ee" options={({ route })=>({
+                  
+                  headerStyle:{
+                    backgroundColor: colors.background,
+                  },
+                  unmountOnBlur: true,
+                  headerTitleAlign: 'left',
+                  headerTitleStyle: {
+                    textAlign:"center",
+                    color: colors.headertextandicons,
+                   
+                },
+                
+    
+      })} component={TimeTable}/>
+    <Lesson_Stack.Screen name="Изменить"  options={({ route })=>({
+                  
+                  headerStyle:{
+                    backgroundColor: colors.background,
+                  
+                  },
+                  unmountOnBlur: true,
+                  headerTitleAlign: 'left',
+                  headerTitleStyle: {
+                    textAlign:"center",
+                    color: colors.headertextandicons,
+                   
+                },
+                
+    
+      })} component={Change}/>
   </Lesson_Stack.Navigator>
   )
 }
@@ -71,8 +101,38 @@ function ProfileStackNavigator (){
     >
       <Profile_Stack.Screen name = "ds"  options={{headerShown: false}} component={Profile}/>     
       <Profile_Stack.Screen name = "Добавить расписание"  options={{headerShown: false}} component={DropDownsNavigator}/>
-      <Profile_Stack.Screen name = "Добавить пару"  component={AddLeon}/>
-      <Profile_Stack.Screen name="Авторизация" component={Auth_firstStep}/>
+      <Profile_Stack.Screen name = "Добавить пару" options={({ route })=>({
+                  
+                  headerStyle:{
+                    backgroundColor: colors.background,
+                  
+                  },
+                  unmountOnBlur: true,
+                  headerTitleAlign: 'left',
+                  headerTitleStyle: {
+                    textAlign:"center",
+                    color: colors.headertextandicons,
+                   
+                },
+                
+    
+      })} component={AddLeon}/>
+      <Profile_Stack.Screen name="Авторизация" options={({ route })=>({
+                  
+                  headerStyle:{
+                    backgroundColor: colors.background,
+                  
+                  },
+                  unmountOnBlur: true,
+                  headerTitleAlign: 'left',
+                  headerTitleStyle: {
+                    textAlign:"center",
+                    color: colors.headertextandicons,
+                   
+                },
+                
+    
+      })} component={Auth_firstStep}/>
 
     </Profile_Stack.Navigator>
   )
@@ -113,7 +173,7 @@ function BottomTabNavigator (){
                 },
                 
     
-      })}component={LessonNavigator}/>
+      })} component={LessonNavigator}/>
             <Bottom_Tab.Screen name='Профиль'  options={({ route })=>({
                     title: "Войти",
                     headerStyle:{

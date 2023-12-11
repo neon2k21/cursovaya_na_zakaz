@@ -53,7 +53,7 @@ export default function App() {
   
 
   return  ( 
-    <ThemeProvider>
+    <ThemeProvider colorScheme='dark' >
       <SafeAreaView className="w-full h-full">
           <AppNavigation/>
       </SafeAreaView>

@@ -3,8 +3,6 @@ import {useNavigation} from '@react-navigation/native';
 import { useEffect, useLayoutEffect, useState } from "react";
 import Auth from "../components/profile/profileScreen/auth";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-
 import CardTimeTable from "../components/profile/profileScreen/timetable_card";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import * as SQLite from "expo-sqlite"
@@ -38,14 +36,16 @@ async function getUerToken(){
  
  }
 
+
+
 export default function Profile(){
   const {navigate} = useNavigation()
   let names = []   
    const {dark, colors, setScheme} = useTheme()
    const [isEnabled, setIsEnabled] = useState(false);
    const [data, setData] = useState();
+
    const ToggleTheme = ()=>{
-    
     dark ? setScheme('light') : setScheme('dark')
     setIsEnabled(previousState => !previousState)
    }

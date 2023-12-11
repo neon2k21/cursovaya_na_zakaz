@@ -8,6 +8,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import DatePicker from 'react-native-modern-datepicker'
 import { getToday, getFormatedDate } from "react-native-modern-datepicker";
 import { useNavigation } from "@react-navigation/native";
+import { useTheme } from "../../../Theme/themeProvider";
 
 const data_teachers = [
 {value:0,label:"Аблаева Г.Р."},
@@ -406,10 +407,21 @@ extraTimeTable = []
     console.log(`да `)
    
 }
-
+else{
+  Alert.alert('Ошибка!!!',
+    `Перепроверьте данные!` ,[
+    {
+      text: 'ОК'
+    }
+   ])
+   
+}
 }
 
+
+
 const DropdownParaComponent = () => {
+    const {colors} = useTheme()
     const [value, setValue] = useState(null);
 
     const renderItem = item => {
@@ -418,7 +430,10 @@ const DropdownParaComponent = () => {
           <Text style={styles.textItem}>{item.label}</Text>
           {item.value === value && (
             <AntDesign
-              style={styles.icon}
+              style={{
+                color:colors.headertextandicons,
+                marginRight: 5,
+              }}
               color="black"
               name="Safety"
               size={20}
@@ -430,9 +445,22 @@ const DropdownParaComponent = () => {
 
     return (
       <Dropdown
-        style={styles.dropdown}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
+        style={{ margin: 8,
+          height: 50,
+          borderRadius: 12,
+          borderColor:colors.background,
+          borderWidth:2,
+          padding: 12,      
+          shadowOpacity: 0.2,
+          shadowRadius: 1.41,
+        }}
+        placeholderStyle={{
+          color:colors.text,
+          fontSize: 16,}}
+        selectedTextStyle={{
+          color:colors.text,
+        fontSize: 16,
+      }}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
         data={data_para}
@@ -448,13 +476,17 @@ const DropdownParaComponent = () => {
           selected_para = item.value
         }}
         renderLeftIcon={() => (
-            <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
+            <AntDesign  style={{
+              color:colors.headertextandicons,
+              marginRight: 5,
+            }} color="black" name="Safety" size={20} />
           )}
         renderItem={renderItem}
       />
     );
   };
   const DropdownGroupComponent = () => {
+    const {colors} = useTheme()
     const [value, setValue] = useState(null);
 
     const renderItem = item => {
@@ -463,7 +495,10 @@ const DropdownParaComponent = () => {
           <Text style={styles.textItem}>{item.label}</Text>
           {item.value === value && (
             <AntDesign
-              style={styles.icon}
+              style={{
+                color:colors.headertextandicons,
+                marginRight: 5,
+              }}
               color="black"
               name="Safety"
               size={20}
@@ -475,9 +510,22 @@ const DropdownParaComponent = () => {
 
     return (
       <Dropdown
-        style={styles.dropdown}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
+        style={{ margin: 8,
+          height: 50,
+          borderRadius: 12,
+          borderColor:colors.background,
+          borderWidth:2,
+          padding: 12,      
+          shadowOpacity: 0.2,
+          shadowRadius: 1.41,
+        }}
+        placeholderStyle={{
+          color:colors.text,
+          fontSize: 16,}}
+        selectedTextStyle={{
+          color:colors.text,
+        fontSize: 16,
+      }}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
         data={data_group}
@@ -493,13 +541,17 @@ const DropdownParaComponent = () => {
           selected_group = item.value
         }}
         renderLeftIcon={() => (
-          <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
+          <AntDesign  style={{
+            color:colors.headertextandicons,
+            marginRight: 5,
+          }} color="black" name="Safety" size={20} />
         )}
         renderItem={renderItem}
       />
     );
   };
   const DropdownSubjectComponent = () => {
+    const {colors} = useTheme()
     const [value, setValue] = useState(null);
 
     const renderItem = item => {
@@ -508,7 +560,10 @@ const DropdownParaComponent = () => {
           <Text style={styles.textItem}>{item.label}</Text>
           {item.value === value && (
             <AntDesign
-              style={styles.icon}
+              style={{
+                color:colors.headertextandicons,
+                marginRight: 5,
+              }}
               color="black"
               name="Safety"
               size={20}
@@ -520,9 +575,22 @@ const DropdownParaComponent = () => {
 
     return (
       <Dropdown
-        style={styles.dropdown}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
+        style={{ margin: 8,
+          height: 50,
+          borderRadius: 12,
+          borderColor:colors.background,
+          borderWidth:2,
+          padding: 12,      
+          shadowOpacity: 0.2,
+          shadowRadius: 1.41,
+        }}
+        placeholderStyle={{
+          color:colors.text,
+          fontSize: 16,}}
+        selectedTextStyle={{
+          color:colors.text,
+        fontSize: 16,
+      }}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
         data={data_subject}
@@ -538,13 +606,17 @@ const DropdownParaComponent = () => {
           selected_subject = item.value
         }}
         renderLeftIcon={() => (
-          <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
+          <AntDesign  style={{
+            color:colors.headertextandicons,
+            marginRight: 5,
+          }} color="black" name="Safety" size={20} />
         )}
         renderItem={renderItem}
       />
     );
   };
   const DropdownTeacherComponent = () => {
+    const {colors} = useTheme()
     const [value, setValue] = useState(null);
 
     const renderItem = item => {
@@ -553,7 +625,10 @@ const DropdownParaComponent = () => {
           <Text style={styles.textItem}>{item.label}</Text>
           {item.value === value && (
             <AntDesign
-              style={styles.icon}
+              style={{
+                color:colors.headertextandicons,
+                marginRight: 5,
+              }}
               color="black"
               name="Safety"
               size={20}
@@ -565,9 +640,22 @@ const DropdownParaComponent = () => {
 
     return (
       <Dropdown
-        style={styles.dropdown}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
+        style={{ margin: 8,
+          height: 50,
+          borderRadius: 12,
+          borderColor:colors.background,
+          borderWidth:2,
+          padding: 12,      
+          shadowOpacity: 0.2,
+          shadowRadius: 1.41,
+        }}
+        placeholderStyle={{
+          color:colors.text,
+          fontSize: 16,}}
+        selectedTextStyle={{
+          color:colors.text,
+        fontSize: 16,
+      }}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
         data={data_teachers}
@@ -583,13 +671,17 @@ const DropdownParaComponent = () => {
           selected_teacher = item.value
         }}
         renderLeftIcon={() => (
-          <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
+          <AntDesign  style={{
+            color:colors.headertextandicons,
+            marginRight: 5,
+          }} color="black" name="Safety" size={20} />
         )}
         renderItem={renderItem}
       />
     );
   };
   const DropdowndayComponent = () => {
+    const {colors} = useTheme()
     const [value, setValue] = useState(null);
 
     const renderItem = item => {
@@ -598,7 +690,10 @@ const DropdownParaComponent = () => {
           <Text style={styles.textItem}>{item.label}</Text>
           {item.value === value && (
             <AntDesign
-              style={styles.icon}
+              style={{
+                color:colors.headertextandicons,
+                marginRight: 5,
+              }}
               color="black"
               name="Safety"
               size={20}
@@ -610,9 +705,22 @@ const DropdownParaComponent = () => {
 
     return (
       <Dropdown
-        style={styles.dropdown}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
+        style={{ margin: 8,
+          height: 50,
+          borderRadius: 12,
+          borderColor:colors.background,
+          borderWidth:2,
+          padding: 12,      
+          shadowOpacity: 0.2,
+          shadowRadius: 1.41,
+        }}
+        placeholderStyle={{
+          color:colors.text,
+          fontSize: 16,}}
+        selectedTextStyle={{
+          color:colors.text,
+        fontSize: 16,
+      }}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
         data={data_days}
@@ -628,13 +736,18 @@ const DropdownParaComponent = () => {
           selected_day = item.value
         }}
         renderLeftIcon={() => (
-          <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
+          <AntDesign  style={{
+            color:colors.headertextandicons,
+            marginRight: 5,
+          }}
+           name="Safety" size={20} />
         )}
         renderItem={renderItem}
       />
     );
   };
   const DropdownweekComponent = () => {
+    const {colors} = useTheme()
     const [value, setValue] = useState(null);
 
     const renderItem = item => {
@@ -643,7 +756,10 @@ const DropdownParaComponent = () => {
           <Text style={styles.textItem}>{item.label}</Text>
           {item.value === value && (
             <AntDesign
-              style={styles.icon}
+              style={{
+                color:colors.headertextandicons,
+                marginRight: 5,
+              }}
               color="black"
               name="Safety"
               size={20}
@@ -655,9 +771,22 @@ const DropdownParaComponent = () => {
 
     return (
       <Dropdown
-        style={styles.dropdown}
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
+        style={{ margin: 8,
+          height: 50,
+          borderRadius: 12,
+          borderColor:colors.background,
+          borderWidth:2,
+          padding: 12,      
+          shadowOpacity: 0.2,
+          shadowRadius: 1.41,
+        }}
+        placeholderStyle={{
+          color:colors.text,
+          fontSize: 16,}}
+        selectedTextStyle={{
+          color:colors.text,
+        fontSize: 16,
+      }}
         inputSearchStyle={styles.inputSearchStyle}
         iconStyle={styles.iconStyle}
         data={data_week}
@@ -673,7 +802,11 @@ const DropdownParaComponent = () => {
           selected_week = item.value
         }}
         renderLeftIcon={() => (
-          <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
+          <AntDesign  style={{
+            color:colors.headertextandicons,
+            marginRight: 5,
+          }}
+           name="Safety" size={20} />
         )}
         renderItem={renderItem}
       />
@@ -685,6 +818,7 @@ const DropdownParaComponent = () => {
 export default function AddLeon(){
 const [open,setOpen] = useState(false);
 const [date,setDate] = useState(false);
+const {colors} = useTheme()
 const today = new Date();
 const startDate = getFormatedDate(today.setDate(today.getDate()+1,'YYYY/MM/DD'))
 function handleOnPress(){
@@ -709,8 +843,8 @@ function handleChange(propDate){
                     <DropdowndayComponent/>
                     <DropdownweekComponent/>
                     <TouchableOpacity className="w-3/4  border-2 rounded-full"
-                    style={{height:wp(15),alignSelf:'center',margin:wp(3),justifyContent:'center',borderColor:'white'}}onPress={handleOnPress }>
-                      <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:wp(7),color:'white'}}>
+                    style={{height:wp(15),alignSelf:'center',margin:wp(3),justifyContent:'center',borderColor:colors.background}}onPress={handleOnPress }>
+                      <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:wp(7),color:colors.text}}>
                         Выберите дату
                       </Text>
                     </TouchableOpacity>
@@ -749,16 +883,18 @@ function handleChange(propDate){
 
                     </Modal>
                     <TextInput className="w-3/4 border-2 rounded-full"
-                    style={{height:wp(15),justifyContent:'center',alignSelf:'center', borderColor:'white',paddingHorizontal:wp(10)}}
+                    placeholder="Аудитория"
+                    placeholderTextColor={colors.text}
+                    style={{height:wp(15),justifyContent:'center',alignSelf:'center', borderColor:colors.background,paddingHorizontal:wp(10)}}
                     onChangeText={(text) =>{
                         selected_place = text;
                      }}
                      />
                     {/* кнопка добавления*/}
                     <TouchableOpacity className="w-3/4  border-2 rounded-full"
-                    style={{height:wp(15),alignSelf:'center',margin:wp(10),justifyContent:'center',borderColor:'white'}}
+                    style={{height:wp(15),alignSelf:'center',margin:wp(10),justifyContent:'center',borderColor:colors.background}}
                     onPress={()=>click()}>
-                        <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:wp(7),color:'white'}}>
+                        <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:wp(7),color:colors.text}}>
                             ОК
                         </Text>
                     </TouchableOpacity>
@@ -773,23 +909,9 @@ function handleChange(propDate){
 
  
 
-  const styles = StyleSheet.create({
+  const styles = StyleSheet.create(
     
-    dropdown: {
-      margin: 8,
-      height: 50,
-      borderRadius: 12,
-      borderColor:'white',
-      borderWidth:2,
-      padding: 12,      
-      shadowOpacity: 0.2,
-      shadowRadius: 1.41,
-
-    },
-    icon: {
-    color:'white',
-    marginRight: 5,
-    },
+  {
     item: {
       padding: 17,
       flexDirection: 'row',
@@ -798,14 +920,6 @@ function handleChange(propDate){
     },
     textItem: {
       flex: 1,
-      fontSize: 16,
-    },
-    placeholderStyle: {
-        color:'white',
-      fontSize: 16,
-    },
-    selectedTextStyle: {
-        color:'white',
       fontSize: 16,
     },
     iconStyle: {

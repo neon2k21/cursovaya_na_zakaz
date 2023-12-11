@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { darkColors, lightColors } from "./colors";
 import { useColorScheme } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 
@@ -9,6 +10,7 @@ export const ThemeContext = createContext({
     colors: lightColors,
     setScheme: ()=>{}
 })
+
 
 export const ThemeProvider = (props) => {
     const colorScheme = useColorScheme(colorScheme == "dark")
