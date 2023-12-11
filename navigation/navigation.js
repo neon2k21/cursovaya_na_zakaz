@@ -5,11 +5,7 @@ import {ClockIcon} from 'react-native-heroicons/solid'
 import {UserIcon} from 'react-native-heroicons/solid'
 import {ChevronRightIcon} from 'react-native-heroicons/solid'
 import TimeTable from '../screens/TimeTable';
-import { changeweek } from '../screens/TimeTable';
 import Profile from '../screens/Profile';
-import {ArrowPathIcon} from 'react-native-heroicons/solid'
-import {Bars4Icon} from 'react-native-heroicons/solid'
-import {ArrowsRightLeftIcon} from 'react-native-heroicons/solid'
 import { TouchableOpacity,View } from 'react-native';
 import Add_timetable from '../components/profile/optionsProfile/screens/AddTimeTable/Screen/add_timetable';
 import GroupSearcher from '../components/profile/optionsProfile/screens/AddTimeTable/DropDowns/groupSearch';
@@ -17,21 +13,24 @@ import TeacherSearcher from '../components/profile/optionsProfile/screens/AddTim
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { useTheme } from '../Theme/themeProvider';
 import AddLeon from '../components/profile/profileScreen/add';
-import Auth from '../components/profile/profileScreen/auth';
 import Auth_firstStep from '../components/profile/authScreen/auth_firstStep';
-import ShowLesson from '../components/timetbale/showLesson';
+import Change from '../components/timetbale/change';
 
 const Bottom_Tab = createBottomTabNavigator()
 const Profile_Stack = createNativeStackNavigator()
 const Lesson_Stack = createNativeStackNavigator()
+const Change_Stack = createNativeStackNavigator()
 const Dropdowns_Stack = createNativeStackNavigator()
 
 
+
 function LessonNavigator(){
-  <Lesson_Stack.Navigator>
-    <Lesson_Stack.Screen name="Расписание" component={TimeTable}/>
-    <Lesson_Stack.Screen name="Подробнее" component={ShowLesson}/>
+  return(
+    <Lesson_Stack.Navigator>
+    <Lesson_Stack.Screen name="ee" component={TimeTable}/>
+    <Lesson_Stack.Screen name="Изменить" component={Change}/>
   </Lesson_Stack.Navigator>
+  )
 }
 
 function DropDownsNavigator(){
@@ -100,21 +99,21 @@ function BottomTabNavigator (){
             },
           })}>
             
-            <Bottom_Tab.Screen name='LessonNavigator' options={({ route })=>({
-                  
-                    headerStyle:{
-                      backgroundColor: colors.background,
-                    },
-                    unmountOnBlur: true,
-                    headerTitleAlign: 'left',
-                    headerTitleStyle: {
-                      textAlign:"center",
-                      color: colors.headertextandicons,
-                     
+            <Bottom_Tab.Screen name='Расписание' options={({ route })=>({
+                  headerShown: false,
+                  headerStyle:{
+                    backgroundColor: colors.background,
                   },
-                    
-      
-        })} component={LessonNavigator}   />
+                  unmountOnBlur: true,
+                  headerTitleAlign: 'left',
+                  headerTitleStyle: {
+                    textAlign:"center",
+                    color: colors.headertextandicons,
+                   
+                },
+                
+    
+      })}component={LessonNavigator}/>
             <Bottom_Tab.Screen name='Профиль'  options={({ route })=>({
                     title: "Войти",
                     headerStyle:{

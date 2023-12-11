@@ -144,7 +144,7 @@ console.log("tablename",tablename)
                         for(let i=0;i<len;i++){
   
                             let item = res.rows.item(i);
-                                                   
+                          
                             if(item.grp===tablename  && item.week == weeks && item.day == dayofweek ){
                              names.push({
                                subject: item.subject,
@@ -153,11 +153,12 @@ console.log("tablename",tablename)
                                starttime: item.starttime,
                                endtime: item.endtime,
                                teacher: item.teacher,
-                               teachercontact: item.teachercontact,
+                               teachercontact: item.contact,
                                grp: item.grp,
                                place: item.place,
                                placeInDay: item.placeInDay,
-                              date: "null"
+                               id: item.id,
+                               date: "null"
                              })
                         }
                         }
@@ -188,10 +189,11 @@ console.log("tablename",tablename)
                                             starttime: item.starttime,
                                             endtime: item.endtime,
                                             teacher: item.teacher,
-                                            teachercontact: item.teachercontact,
+                                            teachercontact: item.contact,
                                             grp: item.grp,
                                             place: item.place,
                                             placeInDay: item.placeInDay,
+                                            id: item.id,
                                              date: item.datepara
                                           })
                                         }
@@ -224,10 +226,11 @@ console.log("tablename",tablename)
                                starttime: item.starttime,
                                endtime: item.endtime,
                                teacher: item.teacher,
-                               teachercontact: item.teachercontact,
+                               teachercontact: item.contact,
                                grp: item.grp,
                                place: item.place,
                                placeInDay: item.placeInDay,
+                               id: item.id,
                                date: "null"
                              })
                         }
@@ -258,10 +261,11 @@ console.log("tablename",tablename)
                                             starttime: item.starttime,
                                             endtime: item.endtime,
                                             teacher: item.teacher,
-                                            teachercontact: item.teachercontact,
+                                            teachercontact: item.contact,
                                             grp: item.grp,
                                             place: item.place,
                                             placeInDay: item.placeInDay,
+                                            id: item.id,
                                              date: item.datepara
                                           })
                                         }
@@ -295,8 +299,22 @@ console.log("tablename",tablename)
       contentContainerStyle={{alignContent:'center'}}
       renderItem={({item})=> (
         //console.log('item',item),
-        
-        <Item_of_list name = {item.teacher} contacts={item.contact} place={item.place} startTime={item.starttime} endTime={item.endtime} nameOfSubject ={item.subject}/>
+        <TouchableOpacity onPress={()=>{navigation.navigate('Изменить',{
+        name: item.teacher,
+        subject: item.subject,
+        start: item.starttime,
+        end: item.endtime,
+        id: item.id,
+        place: item.place,
+        })}}>
+        <Item_of_list 
+        name = {item.teacher}
+        contacts={item.teachercontact}
+        place={item.place} 
+        startTime={item.starttime} 
+        endTime={item.endtime} 
+        nameOfSubject ={item.subject}/>
+        </TouchableOpacity>
   
       )
       

@@ -51,67 +51,7 @@ const data_para = [
     { label: '6: 17:20 - 18:50', value: 5 },
     { label: '7: 19:00 - 20:30', value: 6 },
   ];
-const data_group = [
-    {value:0,label:"ТОР-23"},
-    {value:1,label:"РЭГ-23"},
-    {value:2,label:"СЭЗС-23"},
-    {value:3,label:"ПР-23"},
-    {value:4,label:"ОПИ-23"},
-    {value:5,label:"ДПИ-23"},
-    {value:6,label:"МД-23/1"},
-    {value:7,label:"МД-23/2"},
-    {value:8,label:"ИСИП-23/1"},
-    {value:9,label:"ИСИП-23/2"},
-    {value:10,label:"БУ-23"},
-    {value:11,label:"БД-23"},
-    {value:12,label:"Ф-23"},
-    {value:13,label:"ЗИМ-23"},
-    {value:14,label:"ЮР-23/1"},
-    {value:15,label:"ЮР-23/2"},
-    {value:16,label:"ПКД-23"},
-    {value:17,label:"ТОР-22"},
-    {value:18,label:"РЭГ-22"},
-    {value:19,label:"КИП-22"},
-    {value:20,label:"СЭЗС-22"},
-    {value:21,label:"ПР-22"},
-    {value:22,label:"ОПИ-22"},
-    {value:23,label:"ДПИ-22"},
-    {value:24,label:"МД-22"},
-    {value:25,label:"ПО-22/1"},
-    {value:26,label:"ПО-22/2"},
-    {value:27,label:"БУ-22"},
-    {value:28,label:"БД-22"},
-    {value:29,label:"Ф-22"},
-    {value:30,label:"ЗИМ-22"},
-    {value:31,label:"ПСО-22/1"},
-    {value:32,label:"ПСО-22/2"},
-    {value:33,label:"ПКД-22"},
-    {value:34,label:"ТОР-21"},
-    {value:35,label:"РЭГ-21"},
-    {value:36,label:"КИП-21"},
-    {value:37,label:"СЭЗС-21"},
-    {value:38,label:"ПР-21"},
-    {value:39,label:"ОПИ-21"},
-    {value:40,label:"ДПИ-21"},
-    {value:41,label:"МД-21"},
-    {value:42,label:"ПО-21"},
-    {value:43,label:"БУ-21"},
-    {value:44,label:"Ф-21"},
-    {value:45,label:"ЗИМ-21"},
-    {value:46,label:"ПСО-21/1"},
-    {value:47,label:"ПСО-21/2"},
-    {value:48,label:"ПКД-21"},
-    {value:49,label:"ТОР-20"},
-    {value:50,label:"РЭГ-20"},
-    {value:51,label:"СЭЗС-20"},
-    {value:52,label:"ПР-20"},
-    {value:53,label:"ОПИ-20"},
-    {value:54,label:"ДПИ-20"},
-    {value:55,label:"БУ-20"},
-    {value:56,label:"МД-20"},
-    {value:57,label:"ПО-20"},
-    {value:58,label:"ПКД-20"}
-]
+
 const data_subject = [
     {value:0,label:"Математика"},
     {value:1,label:"Физика"},
@@ -312,43 +252,23 @@ const data_subject = [
     {value:196,label:"Монтаж"},
     {value:197,label:"Пр.осн.адвокат. деят."}
 ]
-const data_days = [
-  {value:0,label:"Понедельник"},
-  {value:1,label:"Вторник"},
-  {value:2,label:"Среда"},
-  {value:3,label:"Четверг"},
-  {value:4,label:"Пятница"},
-  {value:5,label:"Суббота"},
-  {value:6,label:"Воскресенье"}
-]
-const data_week = [
-  {value:0,label:"Четная неделя"},
-  {value:1,label:"Нечетная неделя"},
-]
 
-let selected_group = null;
+
 let selected_subject = null;
 let selected_para = null;
 let selected_teacher = null;
-let selected_day = null;
-let selected_week = null;
 let selected_place = "";
 function click(id){
+  console.log(id)
   timetables = []
-   onValue(ref (db, 'TimeTable/') , (snapshot) => {
-    for(let i=0;i<snapshot.val().length;i++) {
-      timetables.push( snapshot.val()[i])
+   onValue(ref (db, 'TimeTable/'+id) , (snapshot) => {
+    
+      timetables.push( snapshot.val())
       
-   }
+   
 });
-extraTimeTable = []
-   onValue(ref (db, 'extraTimeTable/') , (snapshot) => {
-    for(let i=0;i<snapshot.val().length;i++) {
-      extraTimeTable.push( snapshot.val()[i])
-      
-   }
-});
-  if(selected_group!=null&& selected_para!=null&& selected_place!=""&& selected_subject!=null&& selected_teacher!=null&&selected_day!=null && selected_week!=null ){
+console.log(timetables)
+  if(selected_para!=null&& selected_place!=""&& selected_subject!=null&& selected_teacher!=null ){
   let startTime ="";
   let endTime ="";
   if(selected_para == 0){
@@ -381,25 +301,25 @@ extraTimeTable = []
     endTime="20:30"
   }
 
-//     update(ref(db, 'Timetables/' + id), {
-//     group: selected_group,
-//     subject: selected_subject,
-//     placeinday : (selected_para+1),
-//     place: selected_place,
-//     teacher:selected_teacher,
-//     starttime:startTime,
-//     endtime:endTime,
-//     week:selected_week,
-//     day:selected_day,
-//     id:extraTimeTable.length,
-//     date: selected_date
-//    });
-    console.log(`group: ${selected_group}, subject: ${selected_subject},placeinday: 
-    ${selected_para+1}, place: ${selected_place},teacher: ${selected_teacher}, starttime: ${startTime},
-     endtime: ${endTime}, week: ${selected_week}, day: ${selected_day}, id ${extraTimeTable.length}, selected_lesson: ${id} `)
+    update(ref(db, 'TimeTable/' + id), {
+    subject: selected_subject,
+    placeinday : (selected_para+1),
+    place: selected_place,
+    teacher:selected_teacher,
+    starttime:startTime,
+    endtime:endTime,
+    id:id,
+   });
+   timetables = []
+   onValue(ref (db, 'TimeTable/'+id) , (snapshot) => {
+    
+      timetables.push( snapshot.val())
+      
+   
+});
+   console.log(timetables)
 }
-else console.log(`ид группы: ${selected_group}, ид предмета: ${selected_subject},ид пары: 
-${selected_para}, место: ${selected_place},ид учителя: ${selected_teacher}, id ${timetables.length}`)
+else console.log(`ошибка`)
 }
 
 const DropdownParaComponent = () => {
@@ -675,8 +595,8 @@ const DropdownParaComponent = () => {
 
 
   
-export default function Change(props){
-    const {selected_lesson} = props
+export default function Change({route}){
+    console.log(route)
     return (
         <SafeAreaView className="w-full h-full">
              <Image 
@@ -684,12 +604,10 @@ export default function Change(props){
                 source={require('../../assets/backgrounds/bg.jpg')} 
                 className="absolute w-full h-full" />
                 <View className="h-2/4 w-full">
-                    <DropdownGroupComponent/>
-                    <DropdownSubjectComponent/>
+                     <DropdownSubjectComponent/>
                      <DropdownParaComponent/>
-                    <DropdownTeacherComponent/>
-                    <DropdowndayComponent/>
-                    <DropdownweekComponent/>
+                     <DropdownTeacherComponent/>
+
                     <TextInput className="w-3/4 border-2 rounded-full"
                     style={{height:wp(15),justifyContent:'center',alignSelf:'center', borderColor:'white',paddingHorizontal:wp(10)}}
                     onChangeText={(text) =>{
@@ -699,7 +617,7 @@ export default function Change(props){
                     {/* кнопка добавления*/}
                     <TouchableOpacity className="w-3/4  border-2 rounded-full"
                     style={{height:wp(15),alignSelf:'center',margin:wp(10),justifyContent:'center',borderColor:'white'}}
-                    onPress={()=>click(selected_lesson)}>
+                    onPress={()=>click(parseInt(route.params.id))}>
                         <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:wp(7),color:'white'}}>
                             ОК
                         </Text>
