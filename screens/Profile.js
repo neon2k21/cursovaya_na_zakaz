@@ -26,7 +26,7 @@ function openDatabase() {
 
 
 const db1 = openDatabase();
-var username =''
+export let username =''
 
 async function getUerToken(){
   await AsyncStorage.getItem("uertoken").then(time =>{
@@ -97,7 +97,7 @@ export default function Profile(){
       getUerToken()
     },[])
       
-if(username.length!=0){
+if(username!=null){
    return(
         <View className="w-full h-full ">
          

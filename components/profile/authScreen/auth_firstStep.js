@@ -22,7 +22,13 @@ export default function Auth_firstStep(){
     await AsyncStorage.setItem("uertoken",jwtToken)
     console.error(jwtToken)
     navigate('ds')
-    console.log('User account created & signed in!');
+    Alert.alert('Авторизация',
+    `Вы успешно вошли!` ,[
+    {
+      text: 'ОК'
+    }
+   ])
+    
   })
   .catch(error => {
     if (error.code === 'auth/email-already-in-use') {
@@ -30,8 +36,12 @@ export default function Auth_firstStep(){
     }
 
     if (error.code === 'auth/invalid-email') {
-      Alert
-      console.log('That email address is invalid!');
+      Alert.alert('Ошибка',
+    `Проверьте учетные данные` ,[
+    {
+      text: 'ОК'
+    }
+   ])
     }
 
     console.error(error);

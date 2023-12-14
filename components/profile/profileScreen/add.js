@@ -333,10 +333,11 @@ let selected_group = null;
 let selected_subject = null;
 let selected_para = null;
 let selected_teacher = null;
-let selected_day = null;
+let selected_day = -10;
 let selected_week = null;
 let selected_place = "";
 let selected_date = null;
+
 function click(){
    timetables = []
    onValue(ref (db, 'TimeTable/') , (snapshot) => {
@@ -345,14 +346,16 @@ function click(){
       
    }
 });
-extraTimeTable = []
+ let extraTimeTableize = 0
    onValue(ref (db, 'extraTimeTable/') , (snapshot) => {
     for(let i=0;i<snapshot.val().length;i++) {
-      extraTimeTable.push( snapshot.val()[i])
+     extraTimeTableize = snapshot.val().length
       
    }
 });
-  if(selected_group!=null&& selected_para!=null&& selected_place!=""&& selected_subject!=null&& selected_teacher!=null&&selected_day!=null && selected_week!=null ){
+console.log('kolvo-dop-par^ ',extraTimeTableize)
+console.log('den', selected_day)
+  if(selected_group!=null&& selected_para!=null&& selected_place!=""&& selected_subject!=null&& selected_teacher!=null&&selected_day!=-10 && selected_week!=null ){
   let startTime ="";
   let endTime ="";
   if(selected_para == 0){
@@ -384,8 +387,8 @@ extraTimeTable = []
     startTime="19:00"
     endTime="20:30"
   }
-
-    set(ref(db, 'extraTimeTable/' + extraTimeTable.length), {
+     
+    set(ref(db, 'extraTimeTable/' + extraTimeTableize), {
     group: selected_group,
     subject: selected_subject,
     placeinday : (selected_para+1),
@@ -395,7 +398,7 @@ extraTimeTable = []
     endtime:endTime,
     week:selected_week,
     day:selected_day,
-    id:extraTimeTable.length,
+    id:extraTimeTableize,
     date: selected_date
    });
    Alert.alert('Добавление пары',
@@ -408,6 +411,7 @@ extraTimeTable = []
    
 }
 else{
+  console.error(selected_group, selected_date,selected_day, selected_para,selected_place,selected_subject,selected_teacher,selected_week)
   Alert.alert('Ошибка!!!',
     `Перепроверьте данные!` ,[
     {
@@ -445,7 +449,7 @@ const DropdownParaComponent = () => {
 
     return (
       <Dropdown
-        style={{ margin: 8,
+        style={{ margin: wp(1),
           height: 50,
           borderRadius: 12,
           borderColor:colors.background,
@@ -510,7 +514,7 @@ const DropdownParaComponent = () => {
 
     return (
       <Dropdown
-        style={{ margin: 8,
+        style={{ margin: wp(1),
           height: 50,
           borderRadius: 12,
           borderColor:colors.background,
@@ -575,7 +579,7 @@ const DropdownParaComponent = () => {
 
     return (
       <Dropdown
-        style={{ margin: 8,
+        style={{ margin: wp(1),
           height: 50,
           borderRadius: 12,
           borderColor:colors.background,
@@ -640,7 +644,7 @@ const DropdownParaComponent = () => {
 
     return (
       <Dropdown
-        style={{ margin: 8,
+        style={{ margin: wp(1),
           height: 50,
           borderRadius: 12,
           borderColor:colors.background,
@@ -680,72 +684,7 @@ const DropdownParaComponent = () => {
       />
     );
   };
-  const DropdowndayComponent = () => {
-    const {colors} = useTheme()
-    const [value, setValue] = useState(null);
-
-    const renderItem = item => {
-      return (
-        <View style={styles.item}>
-          <Text style={styles.textItem}>{item.label}</Text>
-          {item.value === value && (
-            <AntDesign
-              style={{
-                color:colors.headertextandicons,
-                marginRight: 5,
-              }}
-              color="black"
-              name="Safety"
-              size={20}
-            />
-          )}
-        </View>
-      );
-    };
-
-    return (
-      <Dropdown
-        style={{ margin: 8,
-          height: 50,
-          borderRadius: 12,
-          borderColor:colors.background,
-          borderWidth:2,
-          padding: 12,      
-          shadowOpacity: 0.2,
-          shadowRadius: 1.41,
-        }}
-        placeholderStyle={{
-          color:colors.text,
-          fontSize: 16,}}
-        selectedTextStyle={{
-          color:colors.text,
-        fontSize: 16,
-      }}
-        inputSearchStyle={styles.inputSearchStyle}
-        iconStyle={styles.iconStyle}
-        data={data_days}
-        search
-        maxHeight={300}
-        labelField="label"
-        valueField="value"
-        placeholder="Выберите день"
-        searchPlaceholder="Поиск..."
-        value={value}
-        onChange={item => {
-          setValue(item.value);
-          selected_day = item.value
-        }}
-        renderLeftIcon={() => (
-          <AntDesign  style={{
-            color:colors.headertextandicons,
-            marginRight: 5,
-          }}
-           name="Safety" size={20} />
-        )}
-        renderItem={renderItem}
-      />
-    );
-  };
+  
   const DropdownweekComponent = () => {
     const {colors} = useTheme()
     const [value, setValue] = useState(null);
@@ -771,7 +710,7 @@ const DropdownParaComponent = () => {
 
     return (
       <Dropdown
-        style={{ margin: 8,
+        style={{ margin: wp(1),
           height: 50,
           borderRadius: 12,
           borderColor:colors.background,
@@ -827,6 +766,11 @@ function handleOnPress(){
 function handleChange(propDate){
   setDate(propDate)
   selected_date = propDate
+  var parts =selected_date.split('/');
+  var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
+  selected_day = mydate.getDay()-1;
+  if(selected_day==-1) selected_day=6
+  console.log(selected_day); // 6    
   console.log(propDate)
 }
     return (
@@ -840,10 +784,9 @@ function handleChange(propDate){
                     <DropdownSubjectComponent/>
                      <DropdownParaComponent/>
                     <DropdownTeacherComponent/>
-                    <DropdowndayComponent/>
                     <DropdownweekComponent/>
                     <TouchableOpacity className="w-3/4  border-2 rounded-full"
-                    style={{height:wp(15),alignSelf:'center',margin:wp(3),justifyContent:'center',borderColor:colors.background}}onPress={handleOnPress }>
+                    style={{height:wp(15),alignSelf:'center',margin:wp(1),justifyContent:'center',borderColor:colors.background}}onPress={handleOnPress }>
                       <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:wp(7),color:colors.text}}>
                         Выберите дату
                       </Text>
@@ -892,7 +835,7 @@ function handleChange(propDate){
                      />
                     {/* кнопка добавления*/}
                     <TouchableOpacity className="w-3/4  border-2 rounded-full"
-                    style={{height:wp(15),alignSelf:'center',margin:wp(10),justifyContent:'center',borderColor:colors.background}}
+                    style={{height:wp(15),alignSelf:'center',margin:wp(1),justifyContent:'center',borderColor:colors.background}}
                     onPress={()=>click()}>
                         <Text style={{textAlign:'center',textAlignVertical:'center',fontSize:wp(7),color:colors.text}}>
                             ОК

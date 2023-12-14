@@ -13,6 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ref, onValue} from 'firebase/database'
 import {db} from '../utlls/firebase/index'
 import {ArrowsRightLeftIcon} from 'react-native-heroicons/solid'
+import { username } from "./Profile";
 
 function openDatabase() {
   if (Platform.OS === "web"){
@@ -52,8 +53,8 @@ var tablename =''
 
 async function getGro(){
  await AsyncStorage.getItem("groupname").then(time =>{
-  tablename = time.replaceAll(/[grp{}":\\]/g,"")
-    console.log(tablename)
+  if(tablename===null) console.log('nullll')
+  else tablename = time.replaceAll(/[grp{}":\\]/g,"")
   })
 
 }
@@ -196,7 +197,7 @@ console.log("tablename",tablename)
                                             place: item.place,
                                             placeInDay: item.placeInDay,
                                             id: item.id,
-                                             date: item.datepara
+                                            date: item.datepara
                                           })
                                         }
                                   }
@@ -286,45 +287,80 @@ console.log("tablename",tablename)
       useEffect(()=>{
         fetchdata()
       },[])
+  if(username!=null){
+    return(
   
-      return(
+      <SafeAreaView className="h-fit w-full items-center relative">
+        <Image 
+        blurRadius={70} 
+        source={require('../assets/backgrounds/bg.jpg')} 
+        className="absolute w-full h-full" />
+        <FlatList
+    data={data}
+    extraData={data}
+    className="w-full h-full"
+    contentContainerStyle={{alignContent:'center'}}
+    renderItem={({item})=> (
+      //console.log('item',item),
+      <TouchableOpacity onPress={()=>{navigation.navigate('Изменить',{
+      name: item.teacher,
+      subject: item.subject,
+      para: item.placeInDay,
+      id: item.id,
+      place: item.place,
+      })}}>
+      <Item_of_list 
+      name = {item.teacher}
+      contacts={item.teachercontact}
+      place={item.place} 
+      startTime={item.starttime} 
+      endTime={item.endtime} 
+      nameOfSubject ={item.subject}/>
+      </TouchableOpacity>
+
+    )
+    
+  }
+    /> 
+    </SafeAreaView>
+        
+    
+    )
+  }
+  else {
+    return(
   
-        <SafeAreaView className="h-fit w-full items-center relative">
-          <Image 
-          blurRadius={70} 
-          source={require('../assets/backgrounds/bg.jpg')} 
-          className="absolute w-full h-full" />
-          <FlatList
-      data={data}
-      extraData={data}
-      className="w-full h-full"
-      contentContainerStyle={{alignContent:'center'}}
-      renderItem={({item})=> (
-        //console.log('item',item),
-        <TouchableOpacity onPress={()=>{navigation.navigate('Изменить',{
-        name: item.teacher,
-        subject: item.subject,
-        para: item.placeInDay,
-        id: item.id,
-        place: item.place,
-        })}}>
-        <Item_of_list 
-        name = {item.teacher}
-        contacts={item.teachercontact}
-        place={item.place} 
-        startTime={item.starttime} 
-        endTime={item.endtime} 
-        nameOfSubject ={item.subject}/>
-        </TouchableOpacity>
-  
-      )
+      <SafeAreaView className="h-fit w-full items-center relative">
+        <Image 
+        blurRadius={70} 
+        source={require('../assets/backgrounds/bg.jpg')} 
+        className="absolute w-full h-full" />
+        <FlatList
+    data={data}
+    extraData={data}
+    className="w-full h-full"
+    contentContainerStyle={{alignContent:'center'}}
+    renderItem={({item})=> (
+      //console.log('item',item),
+     
+      <Item_of_list 
+      name = {item.teacher}
+      contacts={item.teachercontact}
+      place={item.place} 
+      startTime={item.starttime} 
+      endTime={item.endtime} 
+      nameOfSubject ={item.subject}/>
+ 
+    )
+    
+  }
+    /> 
+    </SafeAreaView>
+        
+    
+    )
+  }
       
-    }
-      /> 
-      </SafeAreaView>
-          
-      
-      )
   };
   
   const  Tuesday =  () => {

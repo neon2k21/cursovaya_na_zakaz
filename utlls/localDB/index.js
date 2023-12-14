@@ -34,15 +34,20 @@ export function deleteTimeTable(groupname) {
   if(teacherData.indexOf(groupname)==-1){
   
       db1.transaction((tx) => {
-       tx.executeSql(
-        `delete from sheduleByGroup where grp= (?);`,[groupname]);
-          
+       tx.executeSql(`delete from sheduleByGroup where grp= (?);`,[groupname]);
+      tx.executeSql(`delete from extraShedule where grp= (?);`,[groupname]);
+      tx.executeSql(`select * from extraShedule;`, [], (_, { rows }) =>
+           console.log('deleted extraShedule',JSON.stringify(rows))
+);
     }
   )}
   else{
     db1.transaction((tx) => {
-      tx.executeSql(
-       `delete from sheduleByTeacher where teacher= (?);`,[groupname]);
+      tx.executeSql(`delete from sheduleByTeacher where teacher= (?);`,[groupname]);
+       tx.executeSql(`delete from extraShedule where teacher= (?);`,[groupname]);
+       tx.executeSql(`select * from extraShedule;`, [], (_, { rows }) =>
+           console.log('deleted extraShedule',JSON.stringify(rows))
+);
    }
  )}
 }
