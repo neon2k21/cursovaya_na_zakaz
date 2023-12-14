@@ -2,7 +2,14 @@ import messaging from '@react-native-firebase/messaging'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {db} from '../firebase/index'
 import {ref, set, onValue} from 'firebase/database'
-
+let kid = 0
+onValue(ref (db, 'Tokens/'), (snapshot) => {
+  for(let i = 0; i< snapshot.val().length; i++){
+   kid = snapshot.val().length
+   console.log('naphot',snapshot.val().length )
+  }
+ 
+})
 
 
 export async function requestUserPermission(){
@@ -27,16 +34,9 @@ export async function requestUserPermission(){
         try{
             const fcmtoken = await messaging().getToken();
             if(fcmtoken){
-              let kid = 0
+             
               console.log(fcmtoken,'new token')
-                
-              onValue(ref (db, 'Tokens/'), (snapshot) => {
-                for(let i = 0; i< snapshot.val().length; i++){
-                 kid = snapshot.val().length
-                 console.log('naphot',snapshot.val().length )
-                }
-               
-            })
+             
                         
             console.log('dfdfdfd',kid)
             set(ref(db,`Tokens/`+(kid)),{userToken: fcmtoken});
