@@ -177,12 +177,12 @@ console.log("tablename",tablename)
                      
                               if (len > 0){
                                  
-                                  for(let i=0;i<len;i++){
+                                   for(let i=0;i<len;i++){
             
                                       let item = res.rows.item(i);
                                           var parts =item.datepara.split('/');
                                           var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
-                                        if((typeof item.datepara === 'string') && item.datepara.includes('/') && (item.grp === tablename && item.week == weeks && item.day == dayofweek)&& new Date()<mydate){
+                                        if((item.grp === tablename && item.week == dayofweek && item.day == weeks)&& new Date()<mydate){
                                           
                                          
                                           names.push({
@@ -255,7 +255,7 @@ console.log("tablename",tablename)
                                       let item = res.rows.item(i);
                                           var parts =item.datepara.split('/');
                                           var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
-                                        if((typeof item.datepara === 'string') && item.datepara.includes('/') && (item.teacher === tablename && item.week == weeks&& item.day == dayofweek)&& new Date()<mydate){
+                                        if((item.teacher === tablename && item.week == dayofweek && item.day == weeks)&& new Date()<mydate){
                                           
                                             names.push({
                                             subject: item.subject,
@@ -415,12 +415,12 @@ console.log("tablename",tablename)
                      
                               if (len > 0){
                                  
-                                  for(let i=0;i<len;i++){
+                                   for(let i=0;i<len;i++){
             
                                       let item = res.rows.item(i);
                                           var parts =item.datepara.split('/');
                                           var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
-                                        if((typeof item.datepara === 'string') && item.datepara.includes('/') && (item.grp === tablename && item.week == weeks && item.day == dayofweek)&& new Date()<mydate){
+                                        if((item.grp === tablename && item.week == dayofweek && item.day == weeks)&& new Date()<mydate){
                                           
                                          
                                           names.push({
@@ -493,7 +493,7 @@ console.log("tablename",tablename)
                                       let item = res.rows.item(i);
                                           var parts =item.datepara.split('/');
                                           var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
-                                        if((typeof item.datepara === 'string') && item.datepara.includes('/') && (item.teacher === tablename && item.week == weeks&& item.day == dayofweek)&& new Date()<mydate){
+                                        if((item.teacher === tablename && item.week == dayofweek && item.day == weeks)&& new Date()<mydate){
                                           
                                             names.push({
                                             subject: item.subject,
@@ -652,12 +652,12 @@ console.log("tablename",tablename)
                      
                               if (len > 0){
                                  
-                                  for(let i=0;i<len;i++){
+                                   for(let i=0;i<len;i++){
             
                                       let item = res.rows.item(i);
                                           var parts =item.datepara.split('/');
                                           var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
-                                        if((typeof item.datepara === 'string') && item.datepara.includes('/') && (item.grp === tablename && item.week == weeks && item.day == dayofweek)&& new Date()<mydate){
+                                        if((item.grp === tablename && item.week == dayofweek && item.day == weeks)&& new Date()<mydate){
                                           
                                          
                                           names.push({
@@ -730,7 +730,7 @@ console.log("tablename",tablename)
                                       let item = res.rows.item(i);
                                           var parts =item.datepara.split('/');
                                           var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
-                                        if((typeof item.datepara === 'string') && item.datepara.includes('/') && (item.teacher === tablename && item.week == weeks&& item.day == dayofweek)&& new Date()<mydate){
+                                        if((item.teacher === tablename && item.week == dayofweek && item.day == weeks)&& new Date()<mydate){
                                           
                                             names.push({
                                             subject: item.subject,
@@ -890,12 +890,12 @@ console.log("tablename",tablename)
                      
                               if (len > 0){
                                  
-                                  for(let i=0;i<len;i++){
+                                   for(let i=0;i<len;i++){
             
                                       let item = res.rows.item(i);
                                           var parts =item.datepara.split('/');
                                           var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
-                                        if((typeof item.datepara === 'string') && item.datepara.includes('/') && (item.grp === tablename && item.week == weeks && item.day == dayofweek)&& new Date()<mydate){
+                                        if((item.grp === tablename && item.week == dayofweek && item.day == weeks)&& new Date()<mydate){
                                           
                                          
                                           names.push({
@@ -968,7 +968,7 @@ console.log("tablename",tablename)
                                       let item = res.rows.item(i);
                                           var parts =item.datepara.split('/');
                                           var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
-                                        if((typeof item.datepara === 'string') && item.datepara.includes('/') && (item.teacher === tablename && item.week == weeks&& item.day == dayofweek)&& new Date()<mydate){
+                                        if((item.teacher === tablename && item.week == dayofweek && item.day == weeks)&& new Date()<mydate){
                                           
                                             names.push({
                                             subject: item.subject,
@@ -1128,12 +1128,12 @@ console.log("tablename",tablename)
                      
                               if (len > 0){
                                  
-                                  for(let i=0;i<len;i++){
+                                   for(let i=0;i<len;i++){
             
                                       let item = res.rows.item(i);
                                           var parts =item.datepara.split('/');
                                           var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
-                                        if((typeof item.datepara === 'string') && item.datepara.includes('/') && (item.grp === tablename && item.week == weeks && item.day == dayofweek)&& new Date()<mydate){
+                                        if((item.grp === tablename && item.week == dayofweek && item.day == weeks)&& new Date()<mydate){
                                           
                                          
                                           names.push({
@@ -1206,7 +1206,7 @@ console.log("tablename",tablename)
                                       let item = res.rows.item(i);
                                           var parts =item.datepara.split('/');
                                           var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
-                                        if((typeof item.datepara === 'string') && item.datepara.includes('/') && (item.teacher === tablename && item.week == weeks&& item.day == dayofweek)&& new Date()<mydate){
+                                        if((item.teacher === tablename && item.week == dayofweek && item.day == weeks)&& new Date()<mydate){
                                           
                                             names.push({
                                             subject: item.subject,
@@ -1366,12 +1366,12 @@ console.log("tablename",tablename)
                      
                               if (len > 0){
                                  
-                                  for(let i=0;i<len;i++){
+                                   for(let i=0;i<len;i++){
             
                                       let item = res.rows.item(i);
                                           var parts =item.datepara.split('/');
                                           var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
-                                        if((typeof item.datepara === 'string') && item.datepara.includes('/') && (item.grp === tablename && item.week == weeks && item.day == dayofweek)&& new Date()<mydate){
+                                        if((item.grp === tablename && item.week == dayofweek && item.day == weeks)&& new Date()<mydate){
                                           
                                          
                                           names.push({
@@ -1444,7 +1444,7 @@ console.log("tablename",tablename)
                                       let item = res.rows.item(i);
                                           var parts =item.datepara.split('/');
                                           var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
-                                        if((typeof item.datepara === 'string') && item.datepara.includes('/') && (item.teacher === tablename && item.week == weeks&& item.day == dayofweek)&& new Date()<mydate){
+                                        if((item.teacher === tablename && item.week == dayofweek && item.day == weeks)&& new Date()<mydate){
                                           
                                             names.push({
                                             subject: item.subject,
@@ -1604,12 +1604,12 @@ console.log("tablename",tablename)
                      
                               if (len > 0){
                                  
-                                  for(let i=0;i<len;i++){
+                                   for(let i=0;i<len;i++){
             
                                       let item = res.rows.item(i);
                                           var parts =item.datepara.split('/');
                                           var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
-                                        if((typeof item.datepara === 'string') && item.datepara.includes('/') && (item.grp === tablename && item.week == weeks && item.day == dayofweek)&& new Date()<mydate){
+                                        if((item.grp === tablename && item.week == dayofweek && item.day == weeks)&& new Date()<mydate){
                                           
                                          
                                           names.push({
@@ -1682,7 +1682,7 @@ console.log("tablename",tablename)
                                       let item = res.rows.item(i);
                                           var parts =item.datepara.split('/');
                                           var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
-                                        if((typeof item.datepara === 'string') && item.datepara.includes('/') && (item.teacher === tablename && item.week == weeks&& item.day == dayofweek)&& new Date()<mydate){
+                                        if((item.teacher === tablename && item.week == dayofweek && item.day == weeks)&& new Date()<mydate){
                                           
                                             names.push({
                                             subject: item.subject,
