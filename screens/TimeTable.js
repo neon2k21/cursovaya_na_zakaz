@@ -365,191 +365,7 @@ console.log("tablename",tablename)
   
   const  Tuesday =  () => {
     var dayofweek = 1
-     const [data, setData] = React.useState([])
-     
-     const fetchdata = ()=>{
-      
-      
-      if(teacherData.indexOf(tablename)==-1){
-        if(setData.length!=0){
-          let names =[]
-          db1.transaction((tx) => {
-           tx.executeSql(
-            `select * from sheduleByGroup ;`,[],(sqlTxn,res)=>{
-            let len = res.rows.length
-            
-           
-                    if (len > 0){
-                       
-                        for(let i=0;i<len;i++){
   
-                            let item = res.rows.item(i);
-                        
-                           
-                            if(item.grp===tablename  && item.week == weeks && item.day == dayofweek ){
-                             names.push({
-                               subject: item.subject,
-                               week: item.week,
-                               day: item.day,
-                               starttime: item.starttime,
-                               endtime: item.endtime,
-                               teacher: item.teacher,
-                               teachercontact: item.teachercontact,
-                               grp: item.grp,
-                               place: item.place,
-                               placeInDay: item.placeInDay,
-                              date: "null"
-                             })
-                        }
-                        }
-                      }
-                       
-                       
-         
-                    })
-                    tx.executeSql(
-                      `select * from extraShedule GROUP BY id;`,[],(sqlTxn,res)=>{
-                      let len = res.rows.length
-                       
-                     
-                              if (len > 0){
-                                 
-                                  for(let i=0;i<len;i++){
-            
-                                      let item = res.rows.item(i);
-                                          var parts =item.datepara.split('/');
-                                          var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
-                                        if((typeof item.datepara === 'string') && item.datepara.includes('/') && (item.grp === tablename && item.week == weeks && item.day == dayofweek)&& new Date()<mydate){
-                                          
-                                         
-                                          names.push({
-                                            subject: item.subject,
-                                            week: item.week,
-                                            day: item.day,
-                                            starttime: item.starttime,
-                                            endtime: item.endtime,
-                                            teacher: item.teacher,
-                                            teachercontact: item.teachercontact,
-                                            grp: item.grp,
-                                            place: item.place,
-                                            placeInDay: item.placeInDay,
-                                             date: item.datepara
-                                          })
-                                        }
-                                  }
-                                }
-                              })
-                    setData(names)
-                });
-        }
-      }
-      else{
-        if(setData.length!=0){
-          let names =[]
-          db1.transaction((tx) => {
-           tx.executeSql(
-            `select * from sheduleByTeacher;`,[],(sqlTxn,res)=>{
-            let len = res.rows.length
-           
-           
-                    if (len > 0){
-                       
-                        for(let i=0;i<len;i++){
-      
-                            let item = res.rows.item(i);
-                            if(item.teacher === tablename && item.week == weeks && item.day == dayofweek ){
-                             names.push({
-                               subject: item.subject,
-                               week: item.week,
-                               day: item.day,
-                               starttime: item.starttime,
-                               endtime: item.endtime,
-                               teacher: item.teacher,
-                               teachercontact: item.teachercontact,
-                               grp: item.grp,
-                               place: item.place,
-                               placeInDay: item.placeInDay,
-                               date: "null"
-                             })
-                        }
-                        }
-                      }
-                       
-                       
-         
-                    })
-                    tx.executeSql(
-                      `select * from extraShedule GROUP BY id;`,[],(sqlTxn,res)=>{
-                      let len = res.rows.length
-                       
-                     
-                              if (len > 0){
-                                 
-                                  for(let i=0;i<len;i++){
-            
-                                      let item = res.rows.item(i);
-                                          var parts =item.datepara.split('/');
-                                          var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
-                                        if((typeof item.datepara === 'string') && item.datepara.includes('/') && (item.teacher === tablename && item.week == weeks&& item.day == dayofweek)&& new Date()<mydate){
-                                          
-                                            names.push({
-                                            subject: item.subject,
-                                            week: item.week,
-                                            day: item.day,
-                                            starttime: item.starttime,
-                                            endtime: item.endtime,
-                                            teacher: item.teacher,
-                                            teachercontact: item.teachercontact,
-                                            grp: item.grp,
-                                            place: item.place,
-                                            placeInDay: item.placeInDay,
-                                             date: item.datepara
-                                          })
-                                        }
-                                  }
-                                }
-                              })
-                    setData(names)
-                });
-        }
-      }
-      
-      
-    }
-    
-  
-      useEffect(()=>{
-        fetchdata()
-      },[])
-  
-      return(
-  
-        <SafeAreaView className="h-fit w-full items-center relative">
-          <Image 
-          blurRadius={70} 
-          source={require('../assets/backgrounds/bg.jpg')} 
-          className="absolute w-full h-full" />
-          <FlatList
-      data={data}
-      extraData={data}
-      className="w-full h-full"
-      contentContainerStyle={{alignContent:'center'}}
-      renderItem={({item})=> (
-        //console.log('item',item),
-        
-        <Item_of_list name = {item.teacher} contacts="value" type="Теория" place={item.place} startTime={item.starttime} endTime={item.endtime} nameOfSubject ={item.subject}/>
-  
-      )
-      
-    }
-      /> 
-      </SafeAreaView>
-          
-      
-      )
-  };
-  const  Wednsday =  () => {
-    var dayofweek = 2
      const [data, setData] = React.useState([])
      
      const fetchdata = ()=>{
@@ -570,7 +386,6 @@ console.log("tablename",tablename)
   
                             let item = res.rows.item(i);
                           
-                           
                             if(item.grp===tablename  && item.week == weeks && item.day == dayofweek ){
                              names.push({
                                subject: item.subject,
@@ -579,11 +394,12 @@ console.log("tablename",tablename)
                                starttime: item.starttime,
                                endtime: item.endtime,
                                teacher: item.teacher,
-                               teachercontact: item.teachercontact,
+                               teachercontact: item.contact,
                                grp: item.grp,
                                place: item.place,
                                placeInDay: item.placeInDay,
-                              date: "null"
+                               id: item.id,
+                               date: "null"
                              })
                         }
                         }
@@ -614,11 +430,12 @@ console.log("tablename",tablename)
                                             starttime: item.starttime,
                                             endtime: item.endtime,
                                             teacher: item.teacher,
-                                            teachercontact: item.teachercontact,
+                                            teachercontact: item.contact,
                                             grp: item.grp,
                                             place: item.place,
                                             placeInDay: item.placeInDay,
-                                             date: item.datepara
+                                            id: item.id,
+                                            date: item.datepara
                                           })
                                         }
                                   }
@@ -650,10 +467,11 @@ console.log("tablename",tablename)
                                starttime: item.starttime,
                                endtime: item.endtime,
                                teacher: item.teacher,
-                               teachercontact: item.teachercontact,
+                               teachercontact: item.contact,
                                grp: item.grp,
                                place: item.place,
                                placeInDay: item.placeInDay,
+                               id: item.id,
                                date: "null"
                              })
                         }
@@ -684,10 +502,11 @@ console.log("tablename",tablename)
                                             starttime: item.starttime,
                                             endtime: item.endtime,
                                             teacher: item.teacher,
-                                            teachercontact: item.teachercontact,
+                                            teachercontact: item.contact,
                                             grp: item.grp,
                                             place: item.place,
                                             placeInDay: item.placeInDay,
+                                            id: item.id,
                                              date: item.datepara
                                           })
                                         }
@@ -706,36 +525,322 @@ console.log("tablename",tablename)
       useEffect(()=>{
         fetchdata()
       },[])
+  if(username!=null){
+    return(
   
-      return(
-  
-        <SafeAreaView className="h-fit w-full items-center relative">
-          <Image 
-          blurRadius={70} 
-          source={require('../assets/backgrounds/bg.jpg')} 
-          className="absolute w-full h-full" />
-          <FlatList
-      data={data}
-      extraData={data}
-      className="w-full h-full"
-      contentContainerStyle={{alignContent:'center'}}
-      renderItem={({item})=> (
-        //console.log('item',item),
+      <SafeAreaView className="h-fit w-full items-center relative">
+        <Image 
+        blurRadius={70} 
+        source={require('../assets/backgrounds/bg.jpg')} 
+        className="absolute w-full h-full" />
+        <FlatList
+    data={data}
+    extraData={data}
+    className="w-full h-full"
+    contentContainerStyle={{alignContent:'center'}}
+    renderItem={({item})=> (
+      //console.log('item',item),
+      <TouchableOpacity onPress={()=>{navigation.navigate('Изменить',{
+      name: item.teacher,
+      subject: item.subject,
+      para: item.placeInDay,
+      id: item.id,
+      place: item.place,
+      })}}>
+      <Item_of_list 
+      name = {item.teacher}
+      contacts={item.teachercontact}
+      place={item.place} 
+      startTime={item.starttime} 
+      endTime={item.endtime} 
+      nameOfSubject ={item.subject}/>
+      </TouchableOpacity>
+
+    )
+    
+  }
+    /> 
+    </SafeAreaView>
         
-        <Item_of_list name = {item.teacher} contacts="value" type="Теория" place={item.place} startTime={item.starttime} endTime={item.endtime} nameOfSubject ={item.subject}/>
+    
+    )
+  }
+  else {
+    return(
   
-      )
+      <SafeAreaView className="h-fit w-full items-center relative">
+        <Image 
+        blurRadius={70} 
+        source={require('../assets/backgrounds/bg.jpg')} 
+        className="absolute w-full h-full" />
+        <FlatList
+    data={data}
+    extraData={data}
+    className="w-full h-full"
+    contentContainerStyle={{alignContent:'center'}}
+    renderItem={({item})=> (
+      //console.log('item',item),
+     
+      <Item_of_list 
+      name = {item.teacher}
+      contacts={item.teachercontact}
+      place={item.place} 
+      startTime={item.starttime} 
+      endTime={item.endtime} 
+      nameOfSubject ={item.subject}/>
+ 
+    )
+    
+  }
+    /> 
+    </SafeAreaView>
+        
+    
+    )
+  }
+      
+  };
+  const  Wednsday =  () => {
+    var dayofweek = 2
+  
+     const [data, setData] = React.useState([])
+     
+     const fetchdata = ()=>{
+      
+      
+      if(teacherData.indexOf(tablename)==-1){
+        if(setData.length!=0){
+          let names =[]
+          db1.transaction((tx) => {
+           tx.executeSql(
+            `select * from sheduleByGroup ;`,[],(sqlTxn,res)=>{
+            let len = res.rows.length
+            
+           
+                    if (len > 0){
+                       
+                        for(let i=0;i<len;i++){
+  
+                            let item = res.rows.item(i);
+                          
+                            if(item.grp===tablename  && item.week == weeks && item.day == dayofweek ){
+                             names.push({
+                               subject: item.subject,
+                               week: item.week,
+                               day: item.day,
+                               starttime: item.starttime,
+                               endtime: item.endtime,
+                               teacher: item.teacher,
+                               teachercontact: item.contact,
+                               grp: item.grp,
+                               place: item.place,
+                               placeInDay: item.placeInDay,
+                               id: item.id,
+                               date: "null"
+                             })
+                        }
+                        }
+                      }
+                       
+                       
+         
+                    })
+                    tx.executeSql(
+                      `select * from extraShedule GROUP BY id;`,[],(sqlTxn,res)=>{
+                      let len = res.rows.length
+                       
+                     
+                              if (len > 0){
+                                 
+                                  for(let i=0;i<len;i++){
+            
+                                      let item = res.rows.item(i);
+                                          var parts =item.datepara.split('/');
+                                          var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
+                                        if((typeof item.datepara === 'string') && item.datepara.includes('/') && (item.grp === tablename && item.week == weeks && item.day == dayofweek)&& new Date()<mydate){
+                                          
+                                         
+                                          names.push({
+                                            subject: item.subject,
+                                            week: item.week,
+                                            day: item.day,
+                                            starttime: item.starttime,
+                                            endtime: item.endtime,
+                                            teacher: item.teacher,
+                                            teachercontact: item.contact,
+                                            grp: item.grp,
+                                            place: item.place,
+                                            placeInDay: item.placeInDay,
+                                            id: item.id,
+                                            date: item.datepara
+                                          })
+                                        }
+                                  }
+                                }
+                              })
+                    setData(names)
+                });
+        }
+      }
+      else{
+        if(setData.length!=0){
+          let names =[]
+          db1.transaction((tx) => {
+           tx.executeSql(
+            `select * from sheduleByTeacher;`,[],(sqlTxn,res)=>{
+            let len = res.rows.length
+           
+           
+                    if (len > 0){
+                       
+                        for(let i=0;i<len;i++){
+      
+                            let item = res.rows.item(i);
+                            if(item.teacher === tablename && item.week == weeks && item.day == dayofweek ){
+                             names.push({
+                               subject: item.subject,
+                               week: item.week,
+                               day: item.day,
+                               starttime: item.starttime,
+                               endtime: item.endtime,
+                               teacher: item.teacher,
+                               teachercontact: item.contact,
+                               grp: item.grp,
+                               place: item.place,
+                               placeInDay: item.placeInDay,
+                               id: item.id,
+                               date: "null"
+                             })
+                        }
+                        }
+                      }
+                       
+                       
+         
+                    })
+                    tx.executeSql(
+                      `select * from extraShedule GROUP BY id;`,[],(sqlTxn,res)=>{
+                      let len = res.rows.length
+                       
+                     
+                              if (len > 0){
+                                 
+                                  for(let i=0;i<len;i++){
+            
+                                      let item = res.rows.item(i);
+                                          var parts =item.datepara.split('/');
+                                          var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
+                                        if((typeof item.datepara === 'string') && item.datepara.includes('/') && (item.teacher === tablename && item.week == weeks&& item.day == dayofweek)&& new Date()<mydate){
+                                          
+                                            names.push({
+                                            subject: item.subject,
+                                            week: item.week,
+                                            day: item.day,
+                                            starttime: item.starttime,
+                                            endtime: item.endtime,
+                                            teacher: item.teacher,
+                                            teachercontact: item.contact,
+                                            grp: item.grp,
+                                            place: item.place,
+                                            placeInDay: item.placeInDay,
+                                            id: item.id,
+                                             date: item.datepara
+                                          })
+                                        }
+                                  }
+                                }
+                              })
+                    setData(names)
+                });
+        }
+      }
+      
       
     }
-      /> 
-      </SafeAreaView>
-          
+    
+  
+      useEffect(()=>{
+        fetchdata()
+      },[])
+  if(username!=null){
+    return(
+  
+      <SafeAreaView className="h-fit w-full items-center relative">
+        <Image 
+        blurRadius={70} 
+        source={require('../assets/backgrounds/bg.jpg')} 
+        className="absolute w-full h-full" />
+        <FlatList
+    data={data}
+    extraData={data}
+    className="w-full h-full"
+    contentContainerStyle={{alignContent:'center'}}
+    renderItem={({item})=> (
+      //console.log('item',item),
+      <TouchableOpacity onPress={()=>{navigation.navigate('Изменить',{
+      name: item.teacher,
+      subject: item.subject,
+      para: item.placeInDay,
+      id: item.id,
+      place: item.place,
+      })}}>
+      <Item_of_list 
+      name = {item.teacher}
+      contacts={item.teachercontact}
+      place={item.place} 
+      startTime={item.starttime} 
+      endTime={item.endtime} 
+      nameOfSubject ={item.subject}/>
+      </TouchableOpacity>
+
+    )
+    
+  }
+    /> 
+    </SafeAreaView>
+        
+    
+    )
+  }
+  else {
+    return(
+  
+      <SafeAreaView className="h-fit w-full items-center relative">
+        <Image 
+        blurRadius={70} 
+        source={require('../assets/backgrounds/bg.jpg')} 
+        className="absolute w-full h-full" />
+        <FlatList
+    data={data}
+    extraData={data}
+    className="w-full h-full"
+    contentContainerStyle={{alignContent:'center'}}
+    renderItem={({item})=> (
+      //console.log('item',item),
+     
+      <Item_of_list 
+      name = {item.teacher}
+      contacts={item.teachercontact}
+      place={item.place} 
+      startTime={item.starttime} 
+      endTime={item.endtime} 
+      nameOfSubject ={item.subject}/>
+ 
+    )
+    
+  }
+    /> 
+    </SafeAreaView>
+        
+    
+    )
+  }
       
-      )
   };
   
   const  Thursday =  () => {
     var dayofweek = 3
+  
      const [data, setData] = React.useState([])
      
      const fetchdata = ()=>{
@@ -756,7 +861,6 @@ console.log("tablename",tablename)
   
                             let item = res.rows.item(i);
                           
-                           
                             if(item.grp===tablename  && item.week == weeks && item.day == dayofweek ){
                              names.push({
                                subject: item.subject,
@@ -765,11 +869,12 @@ console.log("tablename",tablename)
                                starttime: item.starttime,
                                endtime: item.endtime,
                                teacher: item.teacher,
-                               teachercontact: item.teachercontact,
+                               teachercontact: item.contact,
                                grp: item.grp,
                                place: item.place,
                                placeInDay: item.placeInDay,
-                              date: "null"
+                               id: item.id,
+                               date: "null"
                              })
                         }
                         }
@@ -800,11 +905,12 @@ console.log("tablename",tablename)
                                             starttime: item.starttime,
                                             endtime: item.endtime,
                                             teacher: item.teacher,
-                                            teachercontact: item.teachercontact,
+                                            teachercontact: item.contact,
                                             grp: item.grp,
                                             place: item.place,
                                             placeInDay: item.placeInDay,
-                                             date: item.datepara
+                                            id: item.id,
+                                            date: item.datepara
                                           })
                                         }
                                   }
@@ -836,10 +942,11 @@ console.log("tablename",tablename)
                                starttime: item.starttime,
                                endtime: item.endtime,
                                teacher: item.teacher,
-                               teachercontact: item.teachercontact,
+                               teachercontact: item.contact,
                                grp: item.grp,
                                place: item.place,
                                placeInDay: item.placeInDay,
+                               id: item.id,
                                date: "null"
                              })
                         }
@@ -870,10 +977,11 @@ console.log("tablename",tablename)
                                             starttime: item.starttime,
                                             endtime: item.endtime,
                                             teacher: item.teacher,
-                                            teachercontact: item.teachercontact,
+                                            teachercontact: item.contact,
                                             grp: item.grp,
                                             place: item.place,
                                             placeInDay: item.placeInDay,
+                                            id: item.id,
                                              date: item.datepara
                                           })
                                         }
@@ -892,36 +1000,85 @@ console.log("tablename",tablename)
       useEffect(()=>{
         fetchdata()
       },[])
+  if(username!=null){
+    return(
   
-      return(
-  
-        <SafeAreaView className="h-fit w-full items-center relative">
-          <Image 
-          blurRadius={70} 
-          source={require('../assets/backgrounds/bg.jpg')} 
-          className="absolute w-full h-full" />
-          <FlatList
-      data={data}
-      extraData={data}
-      className="w-full h-full"
-      contentContainerStyle={{alignContent:'center'}}
-      renderItem={({item})=> (
-        //console.log('item',item),
+      <SafeAreaView className="h-fit w-full items-center relative">
+        <Image 
+        blurRadius={70} 
+        source={require('../assets/backgrounds/bg.jpg')} 
+        className="absolute w-full h-full" />
+        <FlatList
+    data={data}
+    extraData={data}
+    className="w-full h-full"
+    contentContainerStyle={{alignContent:'center'}}
+    renderItem={({item})=> (
+      //console.log('item',item),
+      <TouchableOpacity onPress={()=>{navigation.navigate('Изменить',{
+      name: item.teacher,
+      subject: item.subject,
+      para: item.placeInDay,
+      id: item.id,
+      place: item.place,
+      })}}>
+      <Item_of_list 
+      name = {item.teacher}
+      contacts={item.teachercontact}
+      place={item.place} 
+      startTime={item.starttime} 
+      endTime={item.endtime} 
+      nameOfSubject ={item.subject}/>
+      </TouchableOpacity>
+
+    )
+    
+  }
+    /> 
+    </SafeAreaView>
         
-        <Item_of_list name = {item.teacher} contacts="value" type="Теория" place={item.place} startTime={item.starttime} endTime={item.endtime} nameOfSubject ={item.subject}/>
+    
+    )
+  }
+  else {
+    return(
   
-      )
+      <SafeAreaView className="h-fit w-full items-center relative">
+        <Image 
+        blurRadius={70} 
+        source={require('../assets/backgrounds/bg.jpg')} 
+        className="absolute w-full h-full" />
+        <FlatList
+    data={data}
+    extraData={data}
+    className="w-full h-full"
+    contentContainerStyle={{alignContent:'center'}}
+    renderItem={({item})=> (
+      //console.log('item',item),
+     
+      <Item_of_list 
+      name = {item.teacher}
+      contacts={item.teachercontact}
+      place={item.place} 
+      startTime={item.starttime} 
+      endTime={item.endtime} 
+      nameOfSubject ={item.subject}/>
+ 
+    )
+    
+  }
+    /> 
+    </SafeAreaView>
+        
+    
+    )
+  }
       
-    }
-      /> 
-      </SafeAreaView>
-          
-      
-      )
   };
   
   const  Friday =  () => {
     var dayofweek = 4
+  
      const [data, setData] = React.useState([])
      
      const fetchdata = ()=>{
@@ -941,8 +1098,7 @@ console.log("tablename",tablename)
                         for(let i=0;i<len;i++){
   
                             let item = res.rows.item(i);
-                         
-                           
+                          
                             if(item.grp===tablename  && item.week == weeks && item.day == dayofweek ){
                              names.push({
                                subject: item.subject,
@@ -951,11 +1107,12 @@ console.log("tablename",tablename)
                                starttime: item.starttime,
                                endtime: item.endtime,
                                teacher: item.teacher,
-                               teachercontact: item.teachercontact,
+                               teachercontact: item.contact,
                                grp: item.grp,
                                place: item.place,
                                placeInDay: item.placeInDay,
-                              date: "null"
+                               id: item.id,
+                               date: "null"
                              })
                         }
                         }
@@ -986,11 +1143,12 @@ console.log("tablename",tablename)
                                             starttime: item.starttime,
                                             endtime: item.endtime,
                                             teacher: item.teacher,
-                                            teachercontact: item.teachercontact,
+                                            teachercontact: item.contact,
                                             grp: item.grp,
                                             place: item.place,
                                             placeInDay: item.placeInDay,
-                                             date: item.datepara
+                                            id: item.id,
+                                            date: item.datepara
                                           })
                                         }
                                   }
@@ -1022,10 +1180,11 @@ console.log("tablename",tablename)
                                starttime: item.starttime,
                                endtime: item.endtime,
                                teacher: item.teacher,
-                               teachercontact: item.teachercontact,
+                               teachercontact: item.contact,
                                grp: item.grp,
                                place: item.place,
                                placeInDay: item.placeInDay,
+                               id: item.id,
                                date: "null"
                              })
                         }
@@ -1056,10 +1215,11 @@ console.log("tablename",tablename)
                                             starttime: item.starttime,
                                             endtime: item.endtime,
                                             teacher: item.teacher,
-                                            teachercontact: item.teachercontact,
+                                            teachercontact: item.contact,
                                             grp: item.grp,
                                             place: item.place,
                                             placeInDay: item.placeInDay,
+                                            id: item.id,
                                              date: item.datepara
                                           })
                                         }
@@ -1078,36 +1238,85 @@ console.log("tablename",tablename)
       useEffect(()=>{
         fetchdata()
       },[])
+  if(username!=null){
+    return(
   
-      return(
-  
-        <SafeAreaView className="h-fit w-full items-center relative">
-          <Image 
-          blurRadius={70} 
-          source={require('../assets/backgrounds/bg.jpg')} 
-          className="absolute w-full h-full" />
-          <FlatList
-      data={data}
-      extraData={data}
-      className="w-full h-full"
-      contentContainerStyle={{alignContent:'center'}}
-      renderItem={({item})=> (
-        //console.log('item',item),
+      <SafeAreaView className="h-fit w-full items-center relative">
+        <Image 
+        blurRadius={70} 
+        source={require('../assets/backgrounds/bg.jpg')} 
+        className="absolute w-full h-full" />
+        <FlatList
+    data={data}
+    extraData={data}
+    className="w-full h-full"
+    contentContainerStyle={{alignContent:'center'}}
+    renderItem={({item})=> (
+      //console.log('item',item),
+      <TouchableOpacity onPress={()=>{navigation.navigate('Изменить',{
+      name: item.teacher,
+      subject: item.subject,
+      para: item.placeInDay,
+      id: item.id,
+      place: item.place,
+      })}}>
+      <Item_of_list 
+      name = {item.teacher}
+      contacts={item.teachercontact}
+      place={item.place} 
+      startTime={item.starttime} 
+      endTime={item.endtime} 
+      nameOfSubject ={item.subject}/>
+      </TouchableOpacity>
+
+    )
+    
+  }
+    /> 
+    </SafeAreaView>
         
-        <Item_of_list name = {item.teacher} contacts="value" type="Теория" place={item.place} startTime={item.starttime} endTime={item.endtime} nameOfSubject ={item.subject}/>
+    
+    )
+  }
+  else {
+    return(
   
-      )
+      <SafeAreaView className="h-fit w-full items-center relative">
+        <Image 
+        blurRadius={70} 
+        source={require('../assets/backgrounds/bg.jpg')} 
+        className="absolute w-full h-full" />
+        <FlatList
+    data={data}
+    extraData={data}
+    className="w-full h-full"
+    contentContainerStyle={{alignContent:'center'}}
+    renderItem={({item})=> (
+      //console.log('item',item),
+     
+      <Item_of_list 
+      name = {item.teacher}
+      contacts={item.teachercontact}
+      place={item.place} 
+      startTime={item.starttime} 
+      endTime={item.endtime} 
+      nameOfSubject ={item.subject}/>
+ 
+    )
+    
+  }
+    /> 
+    </SafeAreaView>
+        
+    
+    )
+  }
       
-    }
-      /> 
-      </SafeAreaView>
-          
-      
-      )
   };
   
   const  Saturday =  () => {
     var dayofweek = 5
+  
      const [data, setData] = React.useState([])
      
      const fetchdata = ()=>{
@@ -1127,8 +1336,7 @@ console.log("tablename",tablename)
                         for(let i=0;i<len;i++){
   
                             let item = res.rows.item(i);
-                           
-                           
+                          
                             if(item.grp===tablename  && item.week == weeks && item.day == dayofweek ){
                              names.push({
                                subject: item.subject,
@@ -1137,11 +1345,12 @@ console.log("tablename",tablename)
                                starttime: item.starttime,
                                endtime: item.endtime,
                                teacher: item.teacher,
-                               teachercontact: item.teachercontact,
+                               teachercontact: item.contact,
                                grp: item.grp,
                                place: item.place,
                                placeInDay: item.placeInDay,
-                              date: "null"
+                               id: item.id,
+                               date: "null"
                              })
                         }
                         }
@@ -1172,11 +1381,12 @@ console.log("tablename",tablename)
                                             starttime: item.starttime,
                                             endtime: item.endtime,
                                             teacher: item.teacher,
-                                            teachercontact: item.teachercontact,
+                                            teachercontact: item.contact,
                                             grp: item.grp,
                                             place: item.place,
                                             placeInDay: item.placeInDay,
-                                             date: item.datepara
+                                            id: item.id,
+                                            date: item.datepara
                                           })
                                         }
                                   }
@@ -1208,10 +1418,11 @@ console.log("tablename",tablename)
                                starttime: item.starttime,
                                endtime: item.endtime,
                                teacher: item.teacher,
-                               teachercontact: item.teachercontact,
+                               teachercontact: item.contact,
                                grp: item.grp,
                                place: item.place,
                                placeInDay: item.placeInDay,
+                               id: item.id,
                                date: "null"
                              })
                         }
@@ -1242,10 +1453,11 @@ console.log("tablename",tablename)
                                             starttime: item.starttime,
                                             endtime: item.endtime,
                                             teacher: item.teacher,
-                                            teachercontact: item.teachercontact,
+                                            teachercontact: item.contact,
                                             grp: item.grp,
                                             place: item.place,
                                             placeInDay: item.placeInDay,
+                                            id: item.id,
                                              date: item.datepara
                                           })
                                         }
@@ -1264,36 +1476,85 @@ console.log("tablename",tablename)
       useEffect(()=>{
         fetchdata()
       },[])
+  if(username!=null){
+    return(
   
-      return(
-  
-        <SafeAreaView className="h-fit w-full items-center relative">
-          <Image 
-          blurRadius={70} 
-          source={require('../assets/backgrounds/bg.jpg')} 
-          className="absolute w-full h-full" />
-          <FlatList
-      data={data}
-      extraData={data}
-      className="w-full h-full"
-      contentContainerStyle={{alignContent:'center'}}
-      renderItem={({item})=> (
-        //console.log('item',item),
+      <SafeAreaView className="h-fit w-full items-center relative">
+        <Image 
+        blurRadius={70} 
+        source={require('../assets/backgrounds/bg.jpg')} 
+        className="absolute w-full h-full" />
+        <FlatList
+    data={data}
+    extraData={data}
+    className="w-full h-full"
+    contentContainerStyle={{alignContent:'center'}}
+    renderItem={({item})=> (
+      //console.log('item',item),
+      <TouchableOpacity onPress={()=>{navigation.navigate('Изменить',{
+      name: item.teacher,
+      subject: item.subject,
+      para: item.placeInDay,
+      id: item.id,
+      place: item.place,
+      })}}>
+      <Item_of_list 
+      name = {item.teacher}
+      contacts={item.teachercontact}
+      place={item.place} 
+      startTime={item.starttime} 
+      endTime={item.endtime} 
+      nameOfSubject ={item.subject}/>
+      </TouchableOpacity>
+
+    )
+    
+  }
+    /> 
+    </SafeAreaView>
         
-        <Item_of_list name = {item.teacher} contacts="value" type="Теория" place={item.place} startTime={item.starttime} endTime={item.endtime} nameOfSubject ={item.subject}/>
+    
+    )
+  }
+  else {
+    return(
   
-      )
+      <SafeAreaView className="h-fit w-full items-center relative">
+        <Image 
+        blurRadius={70} 
+        source={require('../assets/backgrounds/bg.jpg')} 
+        className="absolute w-full h-full" />
+        <FlatList
+    data={data}
+    extraData={data}
+    className="w-full h-full"
+    contentContainerStyle={{alignContent:'center'}}
+    renderItem={({item})=> (
+      //console.log('item',item),
+     
+      <Item_of_list 
+      name = {item.teacher}
+      contacts={item.teachercontact}
+      place={item.place} 
+      startTime={item.starttime} 
+      endTime={item.endtime} 
+      nameOfSubject ={item.subject}/>
+ 
+    )
+    
+  }
+    /> 
+    </SafeAreaView>
+        
+    
+    )
+  }
       
-    }
-      /> 
-      </SafeAreaView>
-          
-      
-      )
   };
   
   const  Sunday =  () => {
     var dayofweek = 6
+  
      const [data, setData] = React.useState([])
      
      const fetchdata = ()=>{
@@ -1313,8 +1574,7 @@ console.log("tablename",tablename)
                         for(let i=0;i<len;i++){
   
                             let item = res.rows.item(i);
-                           
-                           
+                          
                             if(item.grp===tablename  && item.week == weeks && item.day == dayofweek ){
                              names.push({
                                subject: item.subject,
@@ -1323,11 +1583,12 @@ console.log("tablename",tablename)
                                starttime: item.starttime,
                                endtime: item.endtime,
                                teacher: item.teacher,
-                               teachercontact: item.teachercontact,
+                               teachercontact: item.contact,
                                grp: item.grp,
                                place: item.place,
                                placeInDay: item.placeInDay,
-                              date: "null"
+                               id: item.id,
+                               date: "null"
                              })
                         }
                         }
@@ -1358,11 +1619,12 @@ console.log("tablename",tablename)
                                             starttime: item.starttime,
                                             endtime: item.endtime,
                                             teacher: item.teacher,
-                                            teachercontact: item.teachercontact,
+                                            teachercontact: item.contact,
                                             grp: item.grp,
                                             place: item.place,
                                             placeInDay: item.placeInDay,
-                                             date: item.datepara
+                                            id: item.id,
+                                            date: item.datepara
                                           })
                                         }
                                   }
@@ -1394,10 +1656,11 @@ console.log("tablename",tablename)
                                starttime: item.starttime,
                                endtime: item.endtime,
                                teacher: item.teacher,
-                               teachercontact: item.teachercontact,
+                               teachercontact: item.contact,
                                grp: item.grp,
                                place: item.place,
                                placeInDay: item.placeInDay,
+                               id: item.id,
                                date: "null"
                              })
                         }
@@ -1428,10 +1691,11 @@ console.log("tablename",tablename)
                                             starttime: item.starttime,
                                             endtime: item.endtime,
                                             teacher: item.teacher,
-                                            teachercontact: item.teachercontact,
+                                            teachercontact: item.contact,
                                             grp: item.grp,
                                             place: item.place,
                                             placeInDay: item.placeInDay,
+                                            id: item.id,
                                              date: item.datepara
                                           })
                                         }
@@ -1450,32 +1714,80 @@ console.log("tablename",tablename)
       useEffect(()=>{
         fetchdata()
       },[])
+  if(username!=null){
+    return(
   
-      return(
-  
-        <SafeAreaView className="h-fit w-full items-center relative">
-          <Image 
-          blurRadius={70} 
-          source={require('../assets/backgrounds/bg.jpg')} 
-          className="absolute w-full h-full" />
-          <FlatList
-      data={data}
-      extraData={data}
-      className="w-full h-full"
-      contentContainerStyle={{alignContent:'center'}}
-      renderItem={({item})=> (
-        //console.log('item',item),
+      <SafeAreaView className="h-fit w-full items-center relative">
+        <Image 
+        blurRadius={70} 
+        source={require('../assets/backgrounds/bg.jpg')} 
+        className="absolute w-full h-full" />
+        <FlatList
+    data={data}
+    extraData={data}
+    className="w-full h-full"
+    contentContainerStyle={{alignContent:'center'}}
+    renderItem={({item})=> (
+      //console.log('item',item),
+      <TouchableOpacity onPress={()=>{navigation.navigate('Изменить',{
+      name: item.teacher,
+      subject: item.subject,
+      para: item.placeInDay,
+      id: item.id,
+      place: item.place,
+      })}}>
+      <Item_of_list 
+      name = {item.teacher}
+      contacts={item.teachercontact}
+      place={item.place} 
+      startTime={item.starttime} 
+      endTime={item.endtime} 
+      nameOfSubject ={item.subject}/>
+      </TouchableOpacity>
+
+    )
+    
+  }
+    /> 
+    </SafeAreaView>
         
-        <Item_of_list name = {item.teacher} contacts="value" type="Теория" place={item.place} startTime={item.starttime} endTime={item.endtime} nameOfSubject ={item.subject}/>
+    
+    )
+  }
+  else {
+    return(
   
-      )
+      <SafeAreaView className="h-fit w-full items-center relative">
+        <Image 
+        blurRadius={70} 
+        source={require('../assets/backgrounds/bg.jpg')} 
+        className="absolute w-full h-full" />
+        <FlatList
+    data={data}
+    extraData={data}
+    className="w-full h-full"
+    contentContainerStyle={{alignContent:'center'}}
+    renderItem={({item})=> (
+      //console.log('item',item),
+     
+      <Item_of_list 
+      name = {item.teacher}
+      contacts={item.teachercontact}
+      place={item.place} 
+      startTime={item.starttime} 
+      endTime={item.endtime} 
+      nameOfSubject ={item.subject}/>
+ 
+    )
+    
+  }
+    /> 
+    </SafeAreaView>
+        
+    
+    )
+  }
       
-    }
-      /> 
-      </SafeAreaView>
-          
-      
-      )
   };
   
   
