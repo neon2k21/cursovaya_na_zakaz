@@ -14,7 +14,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 import { useTheme } from '../Theme/themeProvider';
 import AddLeon from '../components/profile/profileScreen/add';
 import Auth_firstStep from '../components/profile/authScreen/auth_firstStep';
-import Change from '../components/timetbale/change';
+import Change from '../components/timeTable/change';
 
 const Bottom_Tab = createBottomTabNavigator()
 const Profile_Stack = createNativeStackNavigator()

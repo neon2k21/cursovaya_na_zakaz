@@ -3,13 +3,13 @@ import {useNavigation} from '@react-navigation/native';
 import * as React from 'react';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { ip_address } from "../config"; 
+import { PlayCircleIcon } from "react-native-heroicons/solid";
 
 
 
 
 export  default function TimeTable(){ 
   const navigation = useNavigation()
-
   const [timetable, setTimeTable] = React.useState([])
 
   const getTimeTableByDayAndGroup = async ( group_id, day) =>{
@@ -35,7 +35,15 @@ export  default function TimeTable(){
       .catch(error => console.log('error', error));
 } 
 
-  
+
+subject_id
+group_id
+place 
+teacher_id
+day
+week 
+start_time 
+end_time
 }
 
 
