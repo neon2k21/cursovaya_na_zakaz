@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "VUZAppCursa4onMac",
-    "slug": "VUZAppCursa4onMac",
+    "name": "TimetableApp",
+    "slug": "TimetableApp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,20 +18,14 @@
       "supportsTablet": true
     },
     "android": {
-      "googleServicesFile": "./android/google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.company.vuzappcursovaya"
+      "package": "com.company.timetableapp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    },
-    "plugins": [
-      "@react-native-firebase/app",
-      "@react-native-firebase/auth"
-
-    ]
+    }
   }
 }
