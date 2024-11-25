@@ -1,45 +1,80 @@
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import * as React from 'react';
 
 export default function Item_of_list(props){
-   const{subject, place,startTime,endTime, teacher}  = props;
+   
+   const{ subject, place, teacher,  start_time, end_time }  = props;
 
    return(
  
-         <View className = " w-full rounded-2xl my-2 bg-transparent border-2" style={{borderColor:colors.background, height: hp(12)}} >
+         <View style = {styles.Lesson_Container} >
              
-            <View className = "flex-row  w-full h-full">
-              <View  className = "border-solid h-full w-3/12 rounded-full   justify-center " >
-                 <Text  style={{fontSize: 17,textAlign: 'center', color:colors.text}} className="font-bold">
-                      {startTime}
-                 </Text>
-                 <Text style={{fontSize: 15,textAlign: 'center', color: colors.text}} className="font-bold">
-                    |
-                 </Text>
-                 <Text style={{fontSize: 15,textAlign: 'center',color: colors.text}}>
-                   {endTime}
-                 </Text>
-              </View>
-              <View className = "flex-1 px-2">
-         <Text className="font-bold" style={{fontSize:wp(4),color: colors.text}}>
-          {nameOfSubject}
-        </Text>
-   
-         <Text style={{fontSize: wp(4),color: colors.text}} >
-           {type}
-         </Text>
-         <View className="flex-row" style={{gap: wp(25)}}>
-         <Text style={{fontSize: wp(4),color: colors.text}}>
-            {place}
-         </Text>
-            </View>   
+            <View  style = {styles.Time_main_Container}>
+              
+               <View  style = {styles.Time_text_Container} >
+                 
+                 <Text  style = {styles.Time_text}> {start_time} </Text>
+                 
+                 <Text style = {styles.Time_text}> | </Text>
+                 
+                 <Text style = {styles.Time_text}> {end_time} </Text>
+              
+               </View>
+            
+               <View className = "flex-1 px-2">
+         
+                  <Text style={styles.Other_text}> {subject} </Text>
 
-        </View>
+                  <Text style={styles.Other_text}> {teacher} </Text>             
+
+                  <Text style={styles.Other_text}> {place} </Text>
+
+               </View>
   
-    </View>
-    </View>
+            </View>
     
-
+         </View>
+    
    )
     
 }
+
+
+const styles = StyleSheet.create({
+   Lesson_Container: {
+      width: '100%',
+      borderRadius: 16, 
+      marginVertical: 8, 
+      backgroundColor: 'transparent',
+      borderWidth: 2,
+      borderColor: colors.background,
+      height: hp(12),
+   },
+   Time_text_Container: {
+      flexDirection: 'row',
+      width: '100%', 
+      height: '100%', 
+   }, 
+   
+   Time_main_Container: {
+      borderStyle: 'solid',
+      height: '100%',
+      width: '25%',
+      borderRadius: 50,
+      justifyContent: 'center',
+    },
+    Time_text: {
+      fontSize: 17,
+      textAlign: 'center',
+      color: "white",
+      fontWeight: 'bold', // Эквивалент font-bold
+    },
+   Other_text_container: {
+      flex: 1,
+      paddingHorizontal: 8,
+   },
+   Other_text: {
+      fontSize:   wp(4),
+      color:  'white'
+   }
+ });
