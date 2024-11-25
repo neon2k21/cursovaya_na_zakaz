@@ -28,11 +28,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "extra": {
-      "eas": {
-        "projectId": "b61aee13-ccba-42c1-a42a-f07641835a95"
-      }
-    },
     "plugins": [
       "@react-native-firebase/app",
       "@react-native-firebase/auth"
