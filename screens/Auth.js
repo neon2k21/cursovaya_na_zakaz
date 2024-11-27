@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/core"
 import { useState } from "react"
 import { View, Text, TextInput, TouchableOpacity, Alert,Image, StyleSheet } from "react-native"
 import { heightPercentageToDP, widthPercentageToDP } from "react-native-responsive-screen";
-import { ip_address } from "../ipconfig";
+import { ip_address } from "../config";
 import CryptoJS from 'crypto-js';
 
 
