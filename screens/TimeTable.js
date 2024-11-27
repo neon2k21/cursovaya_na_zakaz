@@ -3,13 +3,15 @@ import {useNavigation} from '@react-navigation/native';
 import * as React from 'react';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import { ip_address } from "../config"; 
-import { PlayCircleIcon } from "react-native-heroicons/solid";
 import { TabView } from "react-native-tab-view";
+import Item_of_list from "../components/Lesson";
 
 
 
 
 export  default function TimeTable(){ 
+
+  global.group_id = 0
   const navigation = useNavigation()
   const [timetable, setTimeTable] = React.useState([])
 
