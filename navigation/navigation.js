@@ -10,19 +10,27 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import LoginScreen from '../screens/Auth';
 
 
 
 const Bottom_Tab = createBottomTabNavigator()
-const Profile_Stack = createNativeStackNavigator()
-const Lesson_Stack = createNativeStackNavigator()
+const Main_Stack = createNativeStackNavigator()
 
 
 
+function Main_StackNavigator(){
 
-function ProfileStackNavigator (){
-  
+  return(
+    <Main_Stack.Navigator>
+
+    <Main_Stack.Screen name="Вход" options={{headerShown: false}} component={LoginScreen} />
+    <Main_Stack.Screen name="ee" options={{headerShown: false}} component={TimeTable}/>
+  </Main_Stack.Navigator>
+  )
+
 }
+
 
 
 function BottomTabNavigator (){
