@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import * as React from 'react';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export default function Item_of_list(props){
    
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
       marginVertical: 8, 
       backgroundColor: 'transparent',
       borderWidth: 2,
-      borderColor: colors.background,
+      borderColor: "white",
       height: hp(12),
    },
    Time_text_Container: {
