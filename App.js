@@ -1,15 +1,12 @@
-import AppNavigation from './navigation/navigation';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import * as React from 'react'
+import AppNavigation from './navigation/navigation';
 
 
 export default function App() {
-
-
   
   return  ( 
-      <SafeAreaView className="w-full h-full">
-          <AppNavigation/>
+      <SafeAreaView style={{ flex: 1 }}>
+        <AppNavigation/>
       </SafeAreaView>
   )
 
